@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="10dp"
+        tools:context=".UpdateTask">
+
+        <ImageView
+            android:id="@+id/logo_project_management_corp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/logo_project_management"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:contentDescription="@string/desc_logo" />
+
+        <TextView
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:textColor="@color/black"
+            android:text="Mettez à jour votre tâche ci-dessous :"
+            android:paddingBottom="10dp"/>
+
+        <EditText
+            android:id="@+id/update_task_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textVisiblePassword"
+            android:hint="Nom de la tache"
+            android:paddingBottom="5dp"/>
+
+        <EditText
+            android:id="@+id/update_task_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Description"
+            android:paddingBottom="5dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Heures"
+                android:layout_marginHorizontal="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Minutes"
+                android:layout_marginHorizontal="17.5dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp">
+            <NumberPicker
+                android:id="@+id/update_task_duration_hour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"/>
+            <NumberPicker
+                android:id="@+id/update_task_duration_minutes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"/>
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/update_task_begin_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="false"
+            android:hint="Date de début"
+            android:paddingBottom="5dp"/>
+
+        <EditText
+            android:id="@+id/update_task_end_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="false"
+            android:hint="Date de fin"
+            android:paddingBottom="5dp"/>
+
+        <EditText
+            android:id="@+id/update_task_context"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textVisiblePassword"
+            android:hint="Contexte"
+            android:paddingBottom="5dp"/>
+
+        <AutoCompleteTextView
+            android:id="@+id/update_task_project"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Nom du projet"
+            android:completionThreshold="1"
+            android:inputType="textVisiblePassword"
+            android:paddingBottom="5dp"/>
+
+        <Spinner
+            android:id="@+id/update_spinner_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/update_task_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mettre à jour"/>
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60sp"
+            android:orientation="horizontal">
+
+            <Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+                tools:targetApi="lollipop"
+                android:background="@color/moderate_blue">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/display_back_to_list"
+                        android:layout_width="50sp"
+                        android:layout_height="50sp"
+                        android:background="@drawable/back_button"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginTop="5sp"/>
+
+                    <Button
+                        android:id="@+id/display_update_task"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50sp"
+                        android:text="Modifier"
+                        android:layout_centerInParent="true"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="5sp"
+                        style="@style/Widget.AppCompat.Button.Borderless"/>
+
+                    <ImageButton
+                        android:id="@+id/display_delete_task"
+                        android:layout_width="50sp"
+                        android:layout_height="50sp"
+                        android:background="@drawable/blue_bin"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginEnd="5sp"/>
+                </RelativeLayout>
+            </Toolbar>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="10dp"
+            tools:context=".UpdateTask">
+
+            <TextView
+                android:id="@+id/display_task_name"
+                android:textSize="25sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nom de la tache"
+                android:textColor="@color/black"
+                android:paddingBottom="15dp"/>
+
+            <TextView
+                android:id="@+id/display_task_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="Description de la tache"
+                android:paddingBottom="10dp"/>
+
+            <TextView
+                android:id="@+id/display_task_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="Durée estimée"
+                android:paddingBottom="10dp"/>
+
+            <TextView
+                android:id="@+id/display_task_begin_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="Date de début"
+                android:paddingBottom="10dp"/>
+
+            <TextView
+                android:id="@+id/display_task_context"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="Contexte"
+                android:paddingBottom="10dp"/>
+
+            <TextView
+                android:id="@+id/display_task_project"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="Nom du projet"
+                android:paddingBottom="10dp"/>
+
+            <TextView
+                android:id="@+id/display_task_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="Etat d'avancement du projet"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

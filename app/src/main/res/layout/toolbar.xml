@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="60sp"
+        tools:targetApi="lollipop"
+        android:background="@color/moderate_blue">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="50sp"
+                android:layout_height="50sp"
+                android:background="@drawable/back_button"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="5sp"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="50sp"
+                android:text="Modifier"
+                android:layout_centerInParent="true"
+                android:textColor="@color/black"
+                android:layout_marginTop="5sp"
+                style="@style/Widget.AppCompat.Button.Borderless"/>
+
+            <ImageButton
+                android:layout_width="50sp"
+                android:layout_height="50sp"
+                android:background="@drawable/blue_bin"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="5sp"
+                android:layout_marginEnd="5sp"/>
+        </RelativeLayout>
+    </Toolbar>
+
+</LinearLayout>
