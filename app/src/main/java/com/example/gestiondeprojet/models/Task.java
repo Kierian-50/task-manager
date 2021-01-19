@@ -109,14 +109,6 @@ public class Task {
         this.description = description;
     }
 
-    public String getDuration() {
-        return estimateDuration;
-    }
-
-    public void setDuration(String duration) {
-        this.estimateDuration = duration;
-    }
-
     public String getBeginDate() {
         return beginDate;
     }

@@ -7,9 +7,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -84,6 +88,21 @@ public class ListTask extends AppCompatActivity {
      */
     private TaskAdapter taskAdapter;
 
+    /**
+     * The component which indicates to the user the function of the edittext and if you click on
+     * it it focus the edit text.
+     * Le compossant qui indique la fonction du edittext à l'utilisateur et si il clique dessus
+     * ca ouvre l'edittext.
+     */
+    private ImageButton searchIcon;
+
+    /**
+     * The component where the user can search a task.
+     * Le composant où l'utilisateur peut chercher une tâche.
+     */
+    private EditText searchContent;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +113,8 @@ public class ListTask extends AppCompatActivity {
         this.addTask = findViewById(R.id.add_task);
         this.removeTask = findViewById(R.id.remove_task);
         this.listView = findViewById(R.id.shop_list_view);
+        this.searchIcon = findViewById(R.id.search_icon);
+        this.searchContent = findViewById(R.id.search_content);
 
         // List that contains the task which are in the json.
         // Liste qui contient les taches contenues dans le json.
@@ -215,6 +236,39 @@ public class ListTask extends AppCompatActivity {
                 Intent createTask = new Intent(getApplicationContext(), taskDescActivity.class);
                 startActivity(createTask);
                 finish();
+            }
+        });
+
+        // Search bar
+        // On click of the imageButton it focuses the edittext to search of tasks.
+        // En cliquant sur l'imagebutton ça ouvre l'edittext de recherche de taches
+        this.searchIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchContent.requestFocus();
+                searchContent.setFocusableInTouchMode(true);
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(searchContent, InputMethodManager.SHOW_FORCED);
+                }
+        });
+
+        // When the user types it displays only the task which have the same name
+        // Quand l'utilisateur écrit, ça affiche que les tâches qui ont le même nom
+        this.searchContent.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                taskAdapter.getFilter().filter(s);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
     }
