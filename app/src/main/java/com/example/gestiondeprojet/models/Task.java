@@ -1,5 +1,9 @@
 package com.example.gestiondeprojet.models;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * This class represents a task.
  * Cette classe represente une tache.
@@ -171,5 +175,68 @@ public class Task {
 
     public void setProjectName(String projectName) {
         this.projectName = projectName;
+    }
+
+    /**
+     * This method allows to compare the name of two task
+     * Cette méthode permet de comparer le nom de deux tâches.
+     * @param other The other task / L'autre tache
+     * @return A number that represent the comparaison of the two string
+     *         Un nombre qui represente la comparaison des deux string
+     */
+    public int compareByName(Task other){
+        return name.compareTo(other.getName());
+    }
+
+    /**
+     * This method allows to compare the two dates
+     * Cette méthode permet de comparer les deux dates
+     * @param other The other task / L'autre tache
+     * @return A number that represents the comparison of the two dates
+     *         Un nombre qui represente la comparison des deux dates
+     */
+    public int compareByDate(Task other){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        int res = 0;
+        try {
+            // Parse in Date object to compare it.
+            Date dateBegin = sdf.parse(maxEndDate.toString());
+            Date dateEnd = sdf.parse(other.maxEndDate.toString());
+
+            res = dateBegin.compareTo(dateEnd);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return res;
+    }
+
+    /**
+     * This method allows to compare the two states
+     * Cette méthode permet de comparer les deux états
+     * @param other The other task / L'autre tache
+     * @return A number that represents the comparison of the two states
+     *         Un nombre qui represente la comparison des deux states
+     */
+    public int compareByState(Task other){
+        return stateTask.compareTo(other.getStateTask());
+    }
+
+    /**
+     * This method allows to compare the two estimated durations
+     * Cette méthode permet de comparer les deux durée estimées
+     * @param other The other task / L'autre tache
+     * @return A number that represents the comparison of the two states
+     *         Un nombre qui represente la comparison des deux états
+     */
+    public int compareByDuration(Task other){
+        String[] values = estimateDuration.split("h");
+        Integer currentDuration = Integer.parseInt(values[0])*60+Integer.parseInt(values[1].split("m")[0]);
+
+        values = other.getEstimateDuration().split("h");
+        Integer otherDuration = Integer.parseInt(values[0])*60+Integer.parseInt(values[1].split("m")[0]);
+
+        return currentDuration.compareTo(otherDuration);
     }
 }

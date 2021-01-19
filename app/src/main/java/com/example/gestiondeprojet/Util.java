@@ -21,6 +21,7 @@ import static android.content.Context.MODE_PRIVATE;
 import static android.icu.lang.UProperty.NAME;
 import static android.net.wifi.rtt.CivicLocationKeys.STATE;
 import static com.example.gestiondeprojet.Constants.DEBUGG;
+import static com.example.gestiondeprojet.Constants.ID;
 import static com.example.gestiondeprojet.Constants.JSON_EXTENSION;
 import static com.example.gestiondeprojet.Constants.TASK;
 import static com.example.gestiondeprojet.Constants.currentUsername;
@@ -124,7 +125,7 @@ public class Util {
             }
 
             // The json file
-            JSONObject json = Util.readJsonFile(currentUsername+ JSON_EXTENSION, context); // Recupère le json de l'utilisateur
+            JSONObject json = Util.readJsonFile(fileName, context); // Recupère le json de l'utilisateur
 
             // The task list
             JSONArray taskList = json.getJSONArray("Task"); // Recupère ses taches
@@ -149,7 +150,7 @@ public class Util {
     public static void removeTask(String fileName, int index, Context context){
         try{
             // The json file
-            JSONObject json = Util.readJsonFile(currentUsername+ JSON_EXTENSION, context); // Recupère le json de l'utilisateur
+            JSONObject json = Util.readJsonFile(fileName, context); // Recupère le json de l'utilisateur
 
             // The task list
             JSONArray taskList = json.getJSONArray("Task"); // Recupère ses taches
@@ -159,47 +160,11 @@ public class Util {
 
             Log.e(DEBUGG, "removeTask : new json : "+json.toString());
 
-            Util.writeJsonFile(currentUsername+ JSON_EXTENSION, json, context);
+            Util.writeJsonFile(fileName, json, context);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * This method allows to find the next free id for the new task.
-     * Cette méthode permet de trouver le prochain id qui est libre.
-     * @param fileName The name of the json file / Le nom du fichier json.
-     * @param context The context of the activity / Le contexte de l'activité.
-     * @return The next free id / Le prochain id libre.
-     */
-    public static int findId(String fileName, Context context){
-        int nextId = -1;
-        try{
-            // The json file
-            JSONObject json = Util.readJsonFile(currentUsername+ JSON_EXTENSION, context); // Recupère le json de l'utilisateur
-
-            // The task list
-            JSONArray taskList = json.getJSONArray("Task"); // Recupère ses taches
-            int lastId = -1;
-            int nbTasks = taskList.length();
-            if(nbTasks == 0){
-                nextId = 0;
-                lastId = -1;
-                Log.e(DEBUGG, "No task before");
-            }else{
-                JSONObject lastTask = taskList.getJSONObject(nbTasks-1);
-                lastId = lastTask.getInt("id");
-                nextId = lastId+1;
-                Log.e(DEBUGG, "Tasks found : lasttask id : "+lastId+" next id : "+nextId);
-            }
-
-            Log.e(DEBUGG, "Number of tasks : "+nbTasks+"; last id found "+lastId+" ; next tasks id : "+nextId);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return nextId;
     }
 
     /**
@@ -233,5 +198,63 @@ public class Util {
         }
 
         return projects;
+    }
+
+    /**
+     * This method allows to find the position of of the task in the json with his id.
+     * Cette méthode permet de trouver la position d'une tâche dans le json avec son id.
+     * @param id The unique number that reference the task / Le nombre unique qui reference la tâche
+     * @param context The context of the activity / Le contexte  des activité.
+     * @return The position in the json / La position dans le json.
+     */
+    public static int findPositionWithId(int id, Context context){
+        try{
+            // The json file
+            JSONObject json = Util.readJsonFile(currentUsername+ JSON_EXTENSION, context); // Recupère le json de l'utilisateur
+
+            // The task list
+            JSONArray taskList = json.getJSONArray("Task"); // Recupère ses taches
+
+            for (int i = 0; i < taskList.length(); i++) {
+                JSONObject task = taskList.getJSONObject(i);
+                if(task.get(ID).equals(id)){
+                    return i;
+                }
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    /**
+     * This method allows to find the next free id by finding the highest id and add one.
+     * @param fileName The name of the json file / Le nom du fichier json.
+     * @param context The context of the activity.
+     * @return The next free id / Le prochain id libre.
+     */
+    public static int findId(String fileName, Context context){
+        int maxId = 0;
+        try{
+            // The json file
+            JSONObject json = Util.readJsonFile(fileName, context); // Recupère le json de l'utilisateur
+            // The task list
+            JSONArray taskList = json.getJSONArray(TASK); // Recupère ses taches
+            maxId = 0;
+
+            for (int i = 0; i < taskList.length(); i++) {
+                JSONObject task = taskList.getJSONObject(i);
+                int value = task.getInt(ID);
+                if(value >= maxId){
+                    maxId = value;
+                }
+            }
+            maxId++;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return maxId;
     }
 }

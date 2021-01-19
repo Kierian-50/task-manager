@@ -9,13 +9,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.gestiondeprojet.adapter.TaskAdapter;
 import com.example.gestiondeprojet.models.Task;
@@ -29,18 +31,19 @@ import java.util.List;
 
 import static com.example.gestiondeprojet.Constants.BEGIN_DATE;
 import static com.example.gestiondeprojet.Constants.CONTEXT;
-import static com.example.gestiondeprojet.Constants.DEBUGG;
 import static com.example.gestiondeprojet.Constants.DESCRIPTION;
 import static com.example.gestiondeprojet.Constants.ESTIMATE_DURATION;
 import static com.example.gestiondeprojet.Constants.ID;
 import static com.example.gestiondeprojet.Constants.JSON_EXTENSION;
 import static com.example.gestiondeprojet.Constants.MAX_END_DATE;
 import static com.example.gestiondeprojet.Constants.NAME;
+import static com.example.gestiondeprojet.Constants.POSSIBLE_SORT_BY;
 import static com.example.gestiondeprojet.Constants.PROJECT;
 import static com.example.gestiondeprojet.Constants.STATE;
 import static com.example.gestiondeprojet.Constants.TASK;
+import static com.example.gestiondeprojet.Constants.currentIdTask;
+import static com.example.gestiondeprojet.Constants.currentSort;
 import static com.example.gestiondeprojet.Constants.currentUsername;
-import static com.example.gestiondeprojet.Constants.currentIndexTask;
 
 /**
  * This class allows to displays the list of tasks and add the logic of some button to add interaction.
@@ -102,26 +105,37 @@ public class ListTask extends AppCompatActivity {
      */
     private EditText searchContent;
 
+    /**
+     * The component where the user can sort the task.
+     * Le composant où l'utilisateur peut trier les tâches.
+     */
+    private Spinner sortBy;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_task);
 
-        // Init var
+        // Init attributes
         this.context = this;
         this.addTask = findViewById(R.id.add_task);
         this.removeTask = findViewById(R.id.remove_task);
         this.listView = findViewById(R.id.shop_list_view);
         this.searchIcon = findViewById(R.id.search_icon);
         this.searchContent = findViewById(R.id.search_content);
+        this.sortBy = findViewById(R.id.spinner_sort_by);
+
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, POSSIBLE_SORT_BY);
+        this.sortBy.setAdapter(spinnerArrayAdapter);
+        this.sortBy.setSelection(currentSort);
 
         // List that contains the task which are in the json.
         // Liste qui contient les taches contenues dans le json.
         this.taskList = new ArrayList<>();
 
         JSONObject json = Util.readJsonFile(currentUsername+ JSON_EXTENSION, context);
-        Log.e(DEBUGG, currentUsername+ JSON_EXTENSION +" json content :"+json.toString());
+
         try {
             // Find the tasks in the json file
             // Trouve les taches dans le fichier json.
@@ -133,7 +147,7 @@ public class ListTask extends AppCompatActivity {
                 // Find the task / Trouve la tache
                 JSONObject taskObject = taskArray.getJSONObject(i);
                 // Add it to the task list / Ajoute la tache dans la liste de tache
-                //    Task(int id, String name, String memonic, String description, String duration, Date beginDate, Date maxEndDate, String context)
+                // Task(int id, String name, String memonic, String description, String duration, Date beginDate, Date maxEndDate, String context)
                 this.taskList.add(new Task(taskObject.getInt(ID),
                         taskObject.getString(NAME),
                         taskObject.getString(STATE),
@@ -206,7 +220,7 @@ public class ListTask extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         // If he wants to update go to the update' activity
                         // S'il veut mettre à jour alors la page de mise à jour va s'afficher.
-                        currentIndexTask = positionToModify; // Set the index of the task (not the id)
+                        currentIdTask = taskList.get(position).getId(); // Set the index of the task (not the id)
                         Intent createTask = new Intent(getApplicationContext(), UpdateTask.class);
                         startActivity(createTask);
                         finish();
@@ -232,7 +246,7 @@ public class ListTask extends AppCompatActivity {
         this.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                currentIndexTask = position;
+                currentIdTask = taskList.get(position).getId();
                 Intent createTask = new Intent(getApplicationContext(), taskDescActivity.class);
                 startActivity(createTask);
                 finish();
@@ -254,12 +268,11 @@ public class ListTask extends AppCompatActivity {
         });
 
         // When the user types it displays only the task which have the same name
-        // Quand l'utilisateur écrit, ça affiche que les tâches qui ont le même nom
+        // Quand l'utilisateur écrit dans le composant searchContent, ça affiche que les tâches
+        // qui ont le même nom
         this.searchContent.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -267,9 +280,91 @@ public class ListTask extends AppCompatActivity {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
+            public void afterTextChanged(Editable s) {}
+        });
 
+        // This component allows to choose a filter to apply on the list.
+        // Ce composant permet de choisir un filtre à appliquer sur la liste.
+        this.sortBy.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // hide selection text
+                // Cache le texte de selection
+                ((TextView)view).setText(null);
+
+                // Find the setting chosen
+                // Trouve le filtre choisi
+                String sortByChoosen = sortBy.getSelectedItem().toString();
+
+                // If the user wants to filter by state
+                // Si l'utilisateur veut filtrer par état
+                if(sortByChoosen.equalsIgnoreCase("Par état")){
+                    for(int i = 0; i<taskList.size(); i++){
+                        for(int j =0; j<taskList.size(); j++){
+                            if(taskList.get(i).compareByState(taskList.get(j)) > 0){
+                                Task tmp = taskList.get(i);
+                                taskList.set(i, taskList.get(j));
+                                taskList.set(j, tmp);
+                            }
+                        }
+                    }
+                    currentSort = 0;
+                    // If the user wants to filter by date
+                    // Si l'utilisateur veut filtrer par date
+                }else if(sortByChoosen.equalsIgnoreCase("Par date")){
+                    for(int i = 0; i<taskList.size(); i++){
+                        for(int j =0; j<taskList.size(); j++){
+                            if(taskList.get(i).compareByDate(taskList.get(j)) < 0){
+                                Task tmp = taskList.get(i);
+                                taskList.set(i, taskList.get(j));
+                                taskList.set(j, tmp);
+                            }
+                        }
+                    }
+                    currentSort = 1;
+                    // If the user wants to filter by name
+                    // Si l'utilisateur veut filtrer par nom
+                }else if(sortByChoosen.equalsIgnoreCase("Par nom")){
+                    for(int i = 0; i<taskList.size(); i++){
+                        for(int j =0; j<taskList.size(); j++){
+                            if(taskList.get(i).compareByName(taskList.get(j)) < 0){
+                                Task tmp = taskList.get(i);
+                                taskList.set(i, taskList.get(j));
+                                taskList.set(j, tmp);
+                            }
+                        }
+                    }
+                    currentSort = 2;
+                    // If the user wants to filter by estimate duration
+                    // Si l'utilisateur veut filtrer par durée estimée
+                }else if(sortByChoosen.equalsIgnoreCase("Par durée")){
+                    for(int i = 0; i<taskList.size(); i++){
+                        for(int j =0; j<taskList.size(); j++){
+                            if(taskList.get(i).compareByDuration(taskList.get(j)) < 0){
+                                Task tmp = taskList.get(i);
+                                taskList.set(i, taskList.get(j));
+                                taskList.set(j, tmp);
+                            }
+                        }
+                    }
+                    currentSort = 3;
+                    // If the user wants to filter by project name
+                    // Si l'utilisateur veut filtrer par nom de projet
+                }else{
+                    for(int i = 0; i<taskList.size(); i++){
+                        for(int j =0; j<taskList.size(); j++){
+                            if(taskList.get(i).getProjectName().equalsIgnoreCase(taskList.get(j).getProjectName()) && i!=j){
+                                i++;
+                                Task tmp = taskList.get(i);
+                                taskList.set(i, taskList.get(j));
+                                taskList.set(j, tmp);
+                            }
+                        }
+                    }
+                    currentSort = 4;
+                }
+                taskAdapter.notifyDataSetChanged();
             }
+            public void onNothingSelected(AdapterView<?> arg0) {}
         });
     }
 }

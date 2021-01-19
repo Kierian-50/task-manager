@@ -15,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import static com.example.gestiondeprojet.Constants.DEBUGG;
+import static com.example.gestiondeprojet.Constants.currentSort;
 import static com.example.gestiondeprojet.Constants.currentUsername;
 
 /**
@@ -108,6 +109,7 @@ public class Connexion extends AppCompatActivity {
                         // Entry point of the next activity
                         // Point d'entrée de la prochaine activité
                         currentUsername = String.valueOf(id.getText());
+                        currentSort = 0; // By default the current sort is 0
                         Intent intent = new Intent(getApplicationContext(), ListTask.class);
                         startActivity(intent);
                         finish();

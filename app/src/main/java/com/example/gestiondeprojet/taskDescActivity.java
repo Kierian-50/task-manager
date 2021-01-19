@@ -21,8 +21,9 @@ import java.util.Date;
 import static com.example.gestiondeprojet.Constants.DOING;
 import static com.example.gestiondeprojet.Constants.JSON_EXTENSION;
 import static com.example.gestiondeprojet.Constants.TODO;
+import static com.example.gestiondeprojet.Constants.currentIdTask;
 import static com.example.gestiondeprojet.Constants.currentUsername;
-import static com.example.gestiondeprojet.Constants.currentIndexTask;
+import static com.example.gestiondeprojet.Util.findPositionWithId;
 
 /**
  * This class is link to the activity which displays the task and his values and manage the
@@ -136,7 +137,7 @@ public class taskDescActivity extends AppCompatActivity {
         this.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Util.removeTask(currentUsername+ JSON_EXTENSION, currentIndexTask, context);
+                Util.removeTask(currentUsername+JSON_EXTENSION, findPositionWithId(currentIdTask, context), context);
                 Intent intent = new Intent(getApplicationContext(), ListTask.class);
                 startActivity(intent);
                 finish();
@@ -164,7 +165,7 @@ public class taskDescActivity extends AppCompatActivity {
             taskArray = json.getJSONArray("Task");
             // Find the task that the user wants to display
             // Trouve la tâche que l'utilisateur veux voir
-            currentTask = taskArray.getJSONObject(currentIndexTask);
+            currentTask = taskArray.getJSONObject(findPositionWithId(currentIdTask, this));
 
             // Display the values of the task in the components
             // Affiche les valeurs de la tâche dans les composants

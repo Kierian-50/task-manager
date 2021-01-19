@@ -25,7 +25,17 @@
             android:layout_width="65dp"
             android:layout_height="65dp"
             android:layout_marginStart="12.5dp"
+            android:layout_marginEnd="12.5dp"
             android:background="@drawable/task_remove" />
+
+        <Spinner
+            android:background="@drawable/sort"
+            android:id="@+id/spinner_sort_by"
+            android:layout_marginTop="7.5sp"
+            android:layout_marginStart="12.5sp"
+            android:layout_width="50sp"
+            android:layout_height="50sp"/>
+
     </LinearLayout>
 
     <LinearLayout

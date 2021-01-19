@@ -44,8 +44,9 @@ import static com.example.gestiondeprojet.Constants.PROJECT;
 import static com.example.gestiondeprojet.Constants.STATE;
 import static com.example.gestiondeprojet.Constants.TASK;
 import static com.example.gestiondeprojet.Constants.TODO;
+import static com.example.gestiondeprojet.Constants.currentIdTask;
 import static com.example.gestiondeprojet.Constants.currentUsername;
-import static com.example.gestiondeprojet.Constants.currentIndexTask;
+import static com.example.gestiondeprojet.Util.findPositionWithId;
 
 /**
  * This class is link to the update task activity and manage the logic behind this activity.
@@ -270,7 +271,7 @@ public class UpdateTask extends AppCompatActivity {
             // Display the current values of the tasks
             // Affichage des valeurs actuelles de la tache
             this.taskArray = json.getJSONArray(TASK);
-            this.currentTask = taskArray.getJSONObject(currentIndexTask);
+            this.currentTask = taskArray.getJSONObject(findPositionWithId(currentIdTask, context));
 
             this.taskId = this.currentTask.getInt(ID);
 
@@ -327,7 +328,7 @@ public class UpdateTask extends AppCompatActivity {
                         !errorDate){
                     try {
                         // Create the task
-                        taskArray.remove(currentIndexTask); // Supprime la tache du json avant de la réécrire
+                        taskArray.remove(findPositionWithId(currentIdTask, context)); // Supprime la tache du json avant de la réécrire
                         currentTask.put(ID, taskId);
                         currentTask.put(NAME, taskName.getText().toString());
                         currentTask.put(STATE, findStateInSpinner(stateSpinner.getSelectedItem().toString()));

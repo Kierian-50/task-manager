@@ -23,9 +23,11 @@ public final class Constants {
     public static final String BEGIN_DATE ="BeginDate";
     public static final String MAX_END_DATE ="MaxEndDate";
     public static final String CONTEXT = "Context";
-    public static final String PROJECT ="Project";
+    public static final String PROJECT = "Project";
+    public static final ArrayList<String> POSSIBLE_SORT_BY = new ArrayList<>(Arrays.asList("Par état", "Par date", "Par nom", "Par durée", "Par projet"));
 
+    public static int currentSort; // Allow to have the current sort chosen by the user
     public static String currentUsername;
-    public static int currentIndexTask;
+    public static int currentIdTask;
 
 }

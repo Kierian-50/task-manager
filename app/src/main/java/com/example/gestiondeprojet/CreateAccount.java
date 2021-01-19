@@ -15,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import static com.example.gestiondeprojet.Constants.JSON_EXTENSION;
+import static com.example.gestiondeprojet.Constants.currentSort;
 import static com.example.gestiondeprojet.Constants.currentUsername;
 
 /**
@@ -98,6 +99,7 @@ public class CreateAccount extends AppCompatActivity {
 
                             // Start the next activity
                             // Lance la prochaine activity
+                            currentSort = 0; // By default the current sort is 0
                             Intent intent = new Intent(getApplicationContext(), ListTask.class);
                             startActivity(intent);
                             finish();
