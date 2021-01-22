@@ -29,7 +29,7 @@ import static com.example.gestiondeprojet.Util.findPositionWithId;
  * This class is link to the activity which displays the task and his values and manage the
  * logic behind.
  * Cette classe est lié à l'activité d'affichage des valeurs de la tâche et gère la logique
- * dérrière.
+ * derrière.
  */
 public class taskDescActivity extends AppCompatActivity {
 

@@ -1,6 +1,7 @@
 package com.example.gestiondeprojet;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 
 import com.example.gestiondeprojet.models.Task;
@@ -16,6 +17,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 
 import static android.content.Context.MODE_PRIVATE;
 import static android.icu.lang.UProperty.NAME;
@@ -256,5 +260,27 @@ public class Util {
             e.printStackTrace();
         }
         return maxId;
+    }
+
+    /**
+     * This method allows to set an unique color for each project past in paramter and put it in an
+     * hashmap.
+     * Cette méthode permet de lister une unique couleur pour chaque projet passé en paramètre et
+     * les enregistre dans un hashmap.
+     * @param tasks The list of tasks which contains the tasks /
+     *              La liste de tâche contenant les projets.
+     * @return A hashmap which contains the project link with his color / Un hashmap contenant son
+     *         projet en lien avec sa couleur.
+     */
+    public static HashMap<String, Integer> findColorByProject(List<Task> tasks){
+        HashMap<String, Integer> hm = new HashMap<>();
+        for(Task t : tasks){
+            if(!hm.containsKey(t.getProjectName())){
+                Random rnd = new Random();
+                int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+                hm.put(t.getProjectName(), color);
+            }
+        }
+        return hm;
     }
 }

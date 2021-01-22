@@ -11,12 +11,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.gestiondeprojet.R;
+import com.example.gestiondeprojet.Util;
 import com.example.gestiondeprojet.models.Task;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.example.gestiondeprojet.Constants.NB_MAX_LETTER_IN_DESC;
@@ -53,6 +55,12 @@ public class TaskAdapter extends BaseAdapter implements Filterable {
     private List<Task> tempArray;
 
     /**
+     * This hashmap allows to list a unique color for each project.
+     * Cet hashmap permet de lister pour chaque projet une couleur unique.
+     */
+    private HashMap<String, Integer> colorForProject;
+
+    /**
      * Init the attributes.
      * @param context The context of the activity.
      * @param taskList The list of Tasks to display.
@@ -62,6 +70,11 @@ public class TaskAdapter extends BaseAdapter implements Filterable {
         this.inflater = LayoutInflater.from(this.context);
         this.originalArray = taskList;
         this.tempArray = taskList;
+        if(this.originalArray.size() == 0){
+            this.colorForProject = new HashMap<>();
+        }else{
+            this.colorForProject = Util.findColorByProject(originalArray);
+        }
     }
 
     @Override
@@ -126,6 +139,10 @@ public class TaskAdapter extends BaseAdapter implements Filterable {
         int resId = context.getResources().getIdentifier(memonic,"drawable",
                 context.getPackageName());
         itemIconView.setImageResource(resId);
+
+        if(colorForProject.containsKey(projectName)){ // If the project has a color/Si le projet a une couleur.
+            displayProjectName.setTextColor(colorForProject.get(projectName));
+        }
 
         return view;
     }
