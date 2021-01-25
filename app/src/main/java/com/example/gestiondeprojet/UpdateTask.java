@@ -25,6 +25,8 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -39,7 +41,6 @@ import static com.example.gestiondeprojet.Constants.ID;
 import static com.example.gestiondeprojet.Constants.JSON_EXTENSION;
 import static com.example.gestiondeprojet.Constants.MAX_END_DATE;
 import static com.example.gestiondeprojet.Constants.NAME;
-import static com.example.gestiondeprojet.Constants.POSSIBLE_TASK_STATE;
 import static com.example.gestiondeprojet.Constants.PROJECT;
 import static com.example.gestiondeprojet.Constants.STATE;
 import static com.example.gestiondeprojet.Constants.TASK;
@@ -184,7 +185,11 @@ public class UpdateTask extends AppCompatActivity {
 
         // Create the spinner which display teh different state that a task can take.
         // Crée le spinner qui change l'état de la tache
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, POSSIBLE_TASK_STATE);
+        final ArrayList<String> possibleState = new ArrayList<>(Arrays.asList(
+                getResources().getString(R.string.todo),
+                getResources().getString(R.string.doing),
+                getResources().getString(R.string.finish)));
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, possibleState);
         this.stateSpinner.setAdapter(spinnerArrayAdapter);
 
         // If the user select the edittext about the begin date of the task it displays a
@@ -411,9 +416,9 @@ public class UpdateTask extends AppCompatActivity {
      * @return The formal name of the state / Le nom formel de l'état de la tache.
      */
     private String findStateInSpinner(String stateSelection) {
-        if(stateSelection.equals(POSSIBLE_TASK_STATE.get(0))){
+        if(stateSelection.equals(getResources().getString(R.string.todo))){
             return TODO;
-        }else if(stateSelection.equals(POSSIBLE_TASK_STATE.get(1))){
+        }else if(stateSelection.equals(getResources().getString(R.string.doing))){
             return DOING;
         }else{
             return CLOSED;

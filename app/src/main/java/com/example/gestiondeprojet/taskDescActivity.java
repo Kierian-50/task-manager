@@ -170,18 +170,18 @@ public class taskDescActivity extends AppCompatActivity {
             // Display the values of the task in the components
             // Affiche les valeurs de la tâche dans les composants
             this.taskName.setText(currentTask.getString("Name"));
-            this.taskDesc.setText("Description : "+currentTask.getString("Description"));
+            this.taskDesc.setText(getResources().getString(R.string.description)+" : "+currentTask.getString("Description"));
             this.taskDate.setText("🕒 : "+currentTask.getString("BeginDate") +"=>"+currentTask.getString("MaxEndDate"));
-            this.taskContext.setText("Contexte : "+currentTask.getString("Context"));
+            this.taskContext.setText(getResources().getString(R.string.context)+" : "+currentTask.getString("Context"));
             this.taskState.setText(translateState(currentTask.getString("State")));
-            this.taskDuration.setText("Durée estimée : "+currentTask.getString("EstimateDuration"));
+            this.taskDuration.setText(getResources().getString(R.string.estimated_duration)+" : "+currentTask.getString("EstimateDuration"));
 
             // Display the name of the project if it exists
             // Affiche le nom du projet s'il y en a un
             if(currentTask.getString("Project").toString().equals("")){
-                this.taskProjectName.setText("La tâche n'est pas lié à un projet");
+                this.taskProjectName.setText(getResources().getString(R.string.no_project_found));
             }else{
-                this.taskProjectName.setText("Projet lié à la tâche : "+currentTask.getString("Project"));
+                this.taskProjectName.setText(getResources().getString(R.string.project_found)+" : "+currentTask.getString("Project"));
             }
 
         } catch (JSONException e) {
@@ -230,11 +230,11 @@ public class taskDescActivity extends AppCompatActivity {
      */
     private String translateState(String state){
         if(state.equals(TODO)){
-            return "A faire";
+            return getResources().getString(R.string.todo);
         }else if(state.equals(DOING)){
-            return "En cours";
+            return getResources().getString(R.string.doing);
         }else{
-            return "Fini";
+            return getResources().getString(R.string.finish);
         }
     }
 }

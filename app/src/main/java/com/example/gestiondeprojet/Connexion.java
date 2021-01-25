@@ -1,22 +1,32 @@
 package com.example.gestiondeprojet;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Locale;
+
 import static com.example.gestiondeprojet.Constants.DEBUGG;
+import static com.example.gestiondeprojet.Constants.availableLanguege;
 import static com.example.gestiondeprojet.Constants.currentSort;
 import static com.example.gestiondeprojet.Constants.currentUsername;
+import static java.util.Locale.FRANCE;
+import static java.util.Locale.GERMANY;
+import static java.util.Locale.UK;
 
 /**
  * This class allows to make all the logic behind the connection' activity
@@ -55,6 +65,12 @@ public class Connexion extends AppCompatActivity {
      */
     private Context context;
 
+    /**
+     * The component that allows to change the language of the app.
+     * Le composant qui permet de changer la langue de l'application.
+     */
+    private ImageButton translationButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +81,7 @@ public class Connexion extends AppCompatActivity {
         this.connection = findViewById(R.id.connection_button);
         this.id = findViewById(R.id.identifient);
         this.password = findViewById(R.id.password);
+        this.translationButton = findViewById(R.id.connection_translation);
         this.context = this;
 
         // Go to the create account' activity
@@ -126,5 +143,41 @@ public class Connexion extends AppCompatActivity {
                 }
             }
         });
+
+        // If the user click on the translation button, display  a popup with the languages
+        // Si l'utilisateur clique sur le boutton de traduction, affiche une popup avec les langues
+        this.translationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(Connexion.this);
+                mBuilder.setTitle(getResources().getString(R.string.choose_language));
+                mBuilder.setSingleChoiceItems(availableLanguege, -1, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(which==0){
+                            Locale.setDefault(FRANCE);
+                            recreate();
+                        }else if(which==1){
+                            Locale.setDefault(UK);
+                            recreate();
+                        }else if(which==2){
+                            Locale.setDefault(GERMANY);
+                            recreate();
+                        }
+                        Configuration config = new Configuration();
+                        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog mDialog = mBuilder.create();
+                mDialog.show();
+            }
+        });
+    }
+
+    @Override
+    public void recreate() {
+        super.recreate();
+        //TODO redirect to splashsreen for the reacreate or something make more nice
     }
 }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Gestion de projet</string>
+    <string name="slogan">Task Management Corp., der Motor für Ihren Erfolg</string>
+    <string name="connection_text">Bitte loggen Sie sich ein</string>
+    <string name="connection_id">Login</string>
+    <string name="connection_password">Passwort</string>
+    <string name="validate">Validieren</string>
+    <string name="create_account">Ein Konto erstellen</string>
+
+    <string name="create_task_text">Erstellen Sie Ihre Aufgabe unten :</string>
+    <string name="name_task">Name der Aufgabe</string>
+    <string name="description">Beschreibung</string>
+    <string name="hours">Stunden</string>
+    <string name="minutes">Minuten</string>
+    <string name="begin_date">Anfangsdatum</string>
+    <string name="end_date">Beendigungsdatum</string>
+    <string name="context">Kontext</string>
+    <string name="project_name">Projektname</string>
+    <string name="save">Registrieren</string>
+
+    <string name="modify">Andern</string>
+    <string name="estimated_duration">Voraussichtliche Länge</string>
+    <string name="task_state">Status der Aufgabe</string>
+
+    <string name="version">Version</string>
+
+    <string name="update_text">Aktualisieren Sie Ihre Aufgabe unten:</string>
+    <string name="update">Update</string>
+
+    <string name="no_project_found">Die Aufgabe ist nicht mit einem Projekt verbunden</string>
+    <string name="project_found">Projekt bezogen auf die Aufgabe</string>
+    <string name="error_date">Das Startdatum kann nicht nach dem Enddatum liegen!</string>
+    <string name="fill_required_fill">Bitte füllen Sie alle Pflichtfelder aus</string>
+
+    <string name="todo">Zu tun</string>
+    <string name="doing">Doing</string>
+    <string name="finish">Fertig</string>
+
+    <string name="by_state">Nach Zustand</string>
+    <string name="by_date">Nach Datum</string>
+    <string name="by_name">Nach Name</string>
+    <string name="by_duration">Nach Dauern</string>
+    <string name="by_project">Nach Projekt</string>
+
+    <string name="remove_task_text">Löschen der Aufgaben</string>
+    <string name="text_remove_explain">Um eine Aufgabe zu löschen, müssen Sie nur auf die Aufgabe klicken und in der Seite, die die Attribute der Aufgabe anzeigt, müssen Sie auf den Mülleimer klicken oder Sie können eine Sekunde lang auf einer Aufgabe gedrückt bleiben und ein Fenster fordert Sie auf, die Aufgabe zu löschen</string>
+    <string name="text_on_long_item_click">Was wollen Sie mit dem Aufgabe machen ?</string>
+
+    <string name="remove">Löschen</string>
+    <string name="cancel">Abbrechen</string>
+
+    <string name="choose_language">Sprache wählen…</string>
+</resources>

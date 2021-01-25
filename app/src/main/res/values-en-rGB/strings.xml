@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Gestion de projet</string>
+    <string name="slogan">Task Management Corp., the engine of your success</string>
+    <string name="connection_text">To access to your space, please identify yourself</string>
+    <string name="connection_id">Username</string>
+    <string name="connection_password">Password</string>
+    <string name="validate">Connect</string>
+    <string name="create_account">Create account</string>
+
+    <string name="create_task_text">Create your task bellow :</string>
+    <string name="name_task">Name of the task</string>
+    <string name="description">Description</string>
+    <string name="hours">Hours</string>
+    <string name="minutes">Minutes</string>
+    <string name="begin_date">Begin date</string>
+    <string name="end_date">End date</string>
+    <string name="context">Context</string>
+    <string name="project_name">Name of the project</string>
+    <string name="save">Save</string>
+    <string name="modify">Modify</string>
+    <string name="estimated_duration">Estimated duration</string>
+    <string name="task_state">State of the task</string>
+    <string name="version">Version</string>
+    <string name="update_text">Update your task bellow :</string>
+    <string name="update">Update</string>
+    <string name="remove">Remove</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="no_project_found">The task isn\'t link to a project</string>
+    <string name="project_found">Project link to the task</string>
+    <string name="error_date">The begin date can\'t be after the end date !</string>
+    <string name="fill_required_fill">Please fill in all required fields</string>
+
+    <string name="todo">To do</string>
+    <string name="doing">Doing</string>
+    <string name="finish">Finish</string>
+
+    <string name="by_state">By state</string>
+    <string name="by_date">By date</string>
+    <string name="by_name">By name</string>
+    <string name="by_duration">By duration</string>
+    <string name="by_project">By project</string>
+
+    <string name="remove_task_text">Deleting tasks</string>
+    <string name="text_remove_explain">To delete a task, simply click on the task and in the page displaying the attributes of the task, click on the bin or you can stay pressed on a task for a second and a window will prompt you to delete the task</string>
+    <string name="text_on_long_item_click">What do you want to do with the task?</string>
+
+    <string name="choose_language">Choose Language…</string>
+</resources>

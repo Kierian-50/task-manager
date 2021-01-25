@@ -1,12 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Gestion de projet</string>
     <string name="slogan">Task Management Corp., le moteur de votre réussite</string>
-    <string name="desc_logo" translatable="false">logo of project management corp.</string>
     <string name="connection_text">Afin d\'accéder à votre espace, veuillez vous identifier</string>
     <string name="connection_id">Identifiant</string>
     <string name="connection_password">Mot de passe</string>
     <string name="validate">Valider</string>
     <string name="create_account">Créer un compte</string>
+
     <string name="create_task_text">Créer votre tâche ci-dessous :</string>
     <string name="name_task">Nom de la tache</string>
     <string name="description">Description</string>
@@ -25,8 +26,6 @@
     <string name="update">Mettre à jour</string>
     <string name="remove">Supprimer</string>
     <string name="cancel">Annuler</string>
-
-    <string name="date_begin_date_max_end" translatable="false">Date begin / Date max end</string>
 
     <string name="no_project_found">La tâche n\'est pas lié à un projet</string>
     <string name="project_found">Projet lié à la tâche</string>
@@ -47,5 +46,5 @@
     <string name="text_remove_explain">Pour supprimer une tâche, il vous suffit de cliquer sur la tâche et dans la page affichant les attributs de la tâche, il faut cliquer sur la corbeille ou vous pouvez rester appuyer sur une tâche pendant une seconde et une fenêtre va vous inviter à supprimer la tâche</string>
     <string name="text_on_long_item_click">Que voulez vous faire avec la tache ?</string>
 
-    <string name="choose_language">Choose Language…</string>
+    <string name="choose_language">Choisissez la langue…</string>
 </resources>

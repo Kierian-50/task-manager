@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,7 +28,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import static com.example.gestiondeprojet.Constants.BEGIN_DATE;
 import static com.example.gestiondeprojet.Constants.CONTEXT;
@@ -37,13 +40,16 @@ import static com.example.gestiondeprojet.Constants.ID;
 import static com.example.gestiondeprojet.Constants.JSON_EXTENSION;
 import static com.example.gestiondeprojet.Constants.MAX_END_DATE;
 import static com.example.gestiondeprojet.Constants.NAME;
-import static com.example.gestiondeprojet.Constants.POSSIBLE_SORT_BY;
 import static com.example.gestiondeprojet.Constants.PROJECT;
 import static com.example.gestiondeprojet.Constants.STATE;
 import static com.example.gestiondeprojet.Constants.TASK;
+import static com.example.gestiondeprojet.Constants.availableLanguege;
 import static com.example.gestiondeprojet.Constants.currentIdTask;
 import static com.example.gestiondeprojet.Constants.currentSort;
 import static com.example.gestiondeprojet.Constants.currentUsername;
+import static java.util.Locale.FRANCE;
+import static java.util.Locale.GERMANY;
+import static java.util.Locale.UK;
 
 /**
  * This class allows to displays the list of tasks and add the logic of some button to add interaction.
@@ -111,6 +117,11 @@ public class ListTask extends AppCompatActivity {
      */
     private Spinner sortBy;
 
+    /**
+     * The component that allows to change the language of the app.
+     * Le composant qui permet de changer la langue de l'application.
+     */
+    private ImageButton translationButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,8 +136,15 @@ public class ListTask extends AppCompatActivity {
         this.searchIcon = findViewById(R.id.search_icon);
         this.searchContent = findViewById(R.id.search_content);
         this.sortBy = findViewById(R.id.spinner_sort_by);
+        this.translationButton = findViewById(R.id.listTask_translation);
 
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, POSSIBLE_SORT_BY);
+        final ArrayList<String> possibleSort = new ArrayList<>(Arrays.asList(
+                getResources().getString(R.string.by_state),
+                getResources().getString(R.string.by_date),
+                getResources().getString(R.string.by_name),
+                getResources().getString(R.string.by_duration),
+                getResources().getString(R.string.by_project)));
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, possibleSort);
         this.sortBy.setAdapter(spinnerArrayAdapter);
         this.sortBy.setSelection(currentSort);
 
@@ -190,11 +208,8 @@ public class ListTask extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder adb = new AlertDialog.Builder(ListTask.this);
-                adb.setTitle("Suppression de tache :");
-                adb.setMessage("Pour supprimer une tache, il vous suffit de cliquer sur la tache et " +
-                        "dans la page affichant les attributs de la tache, il faut cliquer sur la " +
-                        "corbeille ou vous pouvez rester appuyer sur une tache pendant une seconde " +
-                        "et une fênetre va vous inviter à supprimer la tache");
+                adb.setTitle(getResources().getString(R.string.remove_task_text));
+                adb.setMessage(getResources().getString(R.string.text_remove_explain));
                 adb.setPositiveButton("Ok", null);
                 adb.show();
             }
@@ -214,8 +229,8 @@ public class ListTask extends AppCompatActivity {
                 AlertDialog.Builder adb = new AlertDialog.Builder(ListTask.this);
                 adb.setTitle("Que voulez vous faire avec la tache ?");
                 final int positionToModify = position;
-                adb.setNeutralButton("Annuler", null);
-                adb.setPositiveButton("Mettre à jour", new AlertDialog.OnClickListener() {
+                adb.setNeutralButton(getResources().getString(R.string.cancel), null);
+                adb.setPositiveButton(getResources().getString(R.string.update), new AlertDialog.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // If he wants to update go to the update' activity
@@ -225,7 +240,7 @@ public class ListTask extends AppCompatActivity {
                         startActivity(createTask);
                         finish();
                     }});
-                adb.setNegativeButton("Supprimer", new AlertDialog.OnClickListener() {
+                adb.setNegativeButton(getResources().getString(R.string.remove), new AlertDialog.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Remove the task, if he clicks on delete
@@ -297,7 +312,7 @@ public class ListTask extends AppCompatActivity {
 
                 // If the user wants to filter by state
                 // Si l'utilisateur veut filtrer par état
-                if(sortByChoosen.equalsIgnoreCase("Par état")){
+                if(sortByChoosen.equalsIgnoreCase(getResources().getString(R.string.by_state))){
                     for(int i = 0; i<taskList.size(); i++){
                         for(int j =0; j<taskList.size(); j++){
                             if(taskList.get(i).compareByState(taskList.get(j)) > 0){
@@ -310,7 +325,7 @@ public class ListTask extends AppCompatActivity {
                     currentSort = 0;
                     // If the user wants to filter by date
                     // Si l'utilisateur veut filtrer par date
-                }else if(sortByChoosen.equalsIgnoreCase("Par date")){
+                }else if(sortByChoosen.equalsIgnoreCase(getResources().getString(R.string.by_date))){
                     for(int i = 0; i<taskList.size(); i++){
                         for(int j =0; j<taskList.size(); j++){
                             if(taskList.get(i).compareByDate(taskList.get(j)) < 0){
@@ -323,7 +338,7 @@ public class ListTask extends AppCompatActivity {
                     currentSort = 1;
                     // If the user wants to filter by name
                     // Si l'utilisateur veut filtrer par nom
-                }else if(sortByChoosen.equalsIgnoreCase("Par nom")){
+                }else if(sortByChoosen.equalsIgnoreCase(getResources().getString(R.string.by_name))){
                     for(int i = 0; i<taskList.size(); i++){
                         for(int j =0; j<taskList.size(); j++){
                             if(taskList.get(i).compareByName(taskList.get(j)) < 0){
@@ -336,7 +351,7 @@ public class ListTask extends AppCompatActivity {
                     currentSort = 2;
                     // If the user wants to filter by estimate duration
                     // Si l'utilisateur veut filtrer par durée estimée
-                }else if(sortByChoosen.equalsIgnoreCase("Par durée")){
+                }else if(sortByChoosen.equalsIgnoreCase(getResources().getString(R.string.by_duration))){
                     for(int i = 0; i<taskList.size(); i++){
                         for(int j =0; j<taskList.size(); j++){
                             if(taskList.get(i).compareByDuration(taskList.get(j)) < 0){
@@ -365,6 +380,40 @@ public class ListTask extends AppCompatActivity {
                 taskAdapter.notifyDataSetChanged();
             }
             public void onNothingSelected(AdapterView<?> arg0) {}
+        });
+
+        // If the user click on the translation button, display  a popup with the languages
+        // Si l'utilisateur clique sur le boutton de traduction, affiche une popup avec les langues
+        this.translationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                androidx.appcompat.app.AlertDialog.Builder mBuilder = new androidx.appcompat.app.AlertDialog.Builder(ListTask.this);
+                mBuilder.setTitle(getResources().getString(R.string.choose_language));
+                mBuilder.setSingleChoiceItems(availableLanguege, -1, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(which==0){
+                            Locale.setDefault(FRANCE);
+                            //recreate();
+                        }else if(which==1){
+                            Locale.setDefault(UK);
+                            //recreate();
+                        }else if(which==2){
+                            Locale.setDefault(GERMANY);
+                            //recreate();
+                        }
+                        Configuration config = new Configuration();
+                        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+                        dialog.dismiss();
+                        //TODO check recreate
+                        Intent intent = new Intent(getApplicationContext(), ListTask.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+                androidx.appcompat.app.AlertDialog mDialog = mBuilder.create();
+                mDialog.show();
+            }
         });
     }
 }

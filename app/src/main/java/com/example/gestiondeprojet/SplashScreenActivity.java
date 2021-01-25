@@ -3,11 +3,15 @@ package com.example.gestiondeprojet;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 import static com.example.gestiondeprojet.Constants.SPLASH_SCREEN_DELAY;
+import static java.util.Locale.FRANCE;
 
 /**
  * This class is link to the Slashscreen activity which displays a waiting page at the beginning of
@@ -22,6 +26,11 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+
+        //TODO save preference
+        Locale.setDefault(FRANCE);
+        Configuration config = new Configuration();
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
 
         // Displays the version of the app
         // Affiche la version de l'activité

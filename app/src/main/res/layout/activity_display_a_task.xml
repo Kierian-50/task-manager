@@ -11,7 +11,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <LinearLayout
@@ -35,14 +35,14 @@
                         android:layout_width="50sp"
                         android:layout_height="50sp"
                         android:background="@drawable/back_button"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:layout_marginTop="5sp"/>
 
                     <Button
                         android:id="@+id/display_update_task"
                         android:layout_width="wrap_content"
                         android:layout_height="50sp"
-                        android:text="Modifier"
+                        android:text="@string/modify"
                         android:layout_centerInParent="true"
                         android:textColor="@color/black"
                         android:layout_marginTop="5sp"
@@ -53,7 +53,7 @@
                         android:layout_width="50sp"
                         android:layout_height="50sp"
                         android:background="@drawable/blue_bin"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_marginTop="5sp"
                         android:layout_marginEnd="5sp"/>
                 </RelativeLayout>
@@ -73,7 +73,7 @@
                 android:textSize="25sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nom de la tache"
+                android:text="@string/name_task"
                 android:textColor="@color/black"
                 android:paddingBottom="15dp"/>
 
@@ -82,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
-                android:text="Description de la tache"
+                android:text="@string/description"
                 android:paddingBottom="10dp"/>
 
             <TextView
@@ -90,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
-                android:text="Durée estimée"
+                android:text="@string/estimated_duration"
                 android:paddingBottom="10dp"/>
 
             <TextView
@@ -98,7 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
-                android:text="Date de début"
+                android:text="@string/begin_date"
                 android:paddingBottom="10dp"/>
 
             <TextView
@@ -106,7 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
-                android:text="Contexte"
+                android:text="@string/context"
                 android:paddingBottom="10dp"/>
 
             <TextView
@@ -114,7 +114,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
-                android:text="Nom du projet"
+                android:text="@string/project_name"
                 android:paddingBottom="10dp"/>
 
             <TextView
@@ -122,7 +122,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
-                android:text="Etat d'avancement du projet"/>
+                android:text="@string/task_state"/>
 
         </LinearLayout>
     </LinearLayout>

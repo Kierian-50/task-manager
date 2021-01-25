@@ -26,7 +26,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 import static com.example.gestiondeprojet.Constants.BEGIN_DATE;
 import static com.example.gestiondeprojet.Constants.CONTEXT;
@@ -151,13 +150,7 @@ public class taskCreateActivity extends AppCompatActivity {
         this.nbPickerMinutes.setMinValue(0);
         this.nbPickerMinutes.setMaxValue(59);
 
-        // This line allows to have the correct date format according to your country
-        // Ces lignes permettent d'avoir le bon format de date selon le pays
-        Locale.setDefault(Locale.FRANCE);
-        // Don't understand why it doesn't work
-        // Locale locale = getResources().getConfiguration().locale;
-        // Locale.setDefault(locale);
-
+        //TODO gérer le calendrier selon la région
 
         // If the user select the edittext about the begin date of the task it displays a
         // better display to choose the date.
@@ -305,7 +298,7 @@ public class taskCreateActivity extends AppCompatActivity {
                     // Display a popup which says that the begin date is after the end date.
                     // Affiche une popup qui prévient que la date de début est après la date de fin.
                     AlertDialog.Builder adb = new AlertDialog.Builder(taskCreateActivity.this);
-                    adb.setTitle("La date de début ne peut pas être après la date de fin !");
+                    adb.setTitle(getResources().getString(R.string.error_date));
                     adb.setPositiveButton("Ok", null);
                     adb.show();
                 }else{
@@ -329,7 +322,7 @@ public class taskCreateActivity extends AppCompatActivity {
                     // Display a popup error
                     // Affiche une popup d'erreur
                     AlertDialog.Builder adb = new AlertDialog.Builder(taskCreateActivity.this);
-                    adb.setTitle("Veuillez remplir tous les champs obligatoires");
+                    adb.setTitle(getResources().getString(R.string.fill_required_fill));
                     adb.setPositiveButton("Ok", null);
                     adb.show();
                 }

@@ -27,7 +27,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="50sp"
-                android:text="Modifier"
+                android:text="@string/modify"
                 android:layout_centerInParent="true"
                 android:textColor="@color/black"
                 android:layout_marginTop="5sp"

@@ -37,13 +37,13 @@
             android:id="@+id/text_connection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Afin d'accéder à votre espace, veuillez vous identifier"/>
+            android:text="@string/connection_text"/>
 
         <EditText
             android:id="@+id/identifient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Identifiant"
+            android:hint="@string/connection_id"
             android:inputType="textVisiblePassword|textNoSuggestions"
             app:layout_constraintTop_toBottomOf="@+id/text_connection" />
 
@@ -51,7 +51,7 @@
             android:id="@+id/password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Mot de passe"
+            android:hint="@string/connection_password"
             android:inputType="textPassword|textNoSuggestions"
             app:layout_constraintTop_toBottomOf="@+id/identifient" />
 
@@ -67,17 +67,24 @@
                 android:id="@+id/connection_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="25dp"
-                android:text="Valider"
+                android:layout_marginEnd="25dp"
+                android:text="@string/validate"
                 app:layout_constraintTop_toBottomOf="@+id/password"/>
 
             <Button
                 android:id="@+id/create_account_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Créer un compte"
+                android:text="@string/create_account"
                 app:layout_constraintTop_toBottomOf="@+id/password"/>
         </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/connection_translation"
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:layout_marginTop="30sp"
+            android:background="@drawable/translation"/>
 
     </LinearLayout>
 </ScrollView>

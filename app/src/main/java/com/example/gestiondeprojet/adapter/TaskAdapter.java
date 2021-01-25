@@ -132,7 +132,7 @@ public class TaskAdapter extends BaseAdapter implements Filterable {
         displayName.setText(currentName);
         displayDesc.setText(description);
         displayDate.setText(dateToDisplay);
-        displayEstimateDuration.setText("Durée estimée : "+estimateDuration);
+        displayEstimateDuration.setText(context.getResources().getString(R.string.estimated_duration)+" : "+estimateDuration);
         displayProjectName.setText(projectName);
 
         ImageView itemIconView = view.findViewById(R.id.item_icon);
@@ -141,7 +141,7 @@ public class TaskAdapter extends BaseAdapter implements Filterable {
         itemIconView.setImageResource(resId);
 
         if(colorForProject.containsKey(projectName)){ // If the project has a color/Si le projet a une couleur.
-            displayProjectName.setTextColor(colorForProject.get(projectName));
+            displayProjectName.setTextColor(colorForProject.get(projectName)); // Change the color
         }
 
         return view;

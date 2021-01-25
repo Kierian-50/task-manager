@@ -14,9 +14,18 @@
         app:layout_constraintTop_toBottomOf="@+id/password">
 
         <ImageButton
+            android:id="@+id/listTask_translation"
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:layout_marginEnd="12.5dp"
+            android:layout_marginTop="7.5sp"
+            android:background="@drawable/translation"/>
+
+        <ImageButton
             android:id="@+id/add_task"
             android:layout_width="65dp"
             android:layout_height="65dp"
+            android:layout_marginStart="12.5sp"
             android:layout_marginEnd="12.5dp"
             android:background="@drawable/task_add" />
 

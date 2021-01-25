@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:textSize="22sp"
             android:textColor="@color/black"
-            android:text="Mettez à jour votre tâche ci-dessous :"
+            android:text="@string/update_text"
             android:paddingBottom="10dp"/>
 
         <EditText
@@ -43,14 +43,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textVisiblePassword"
-            android:hint="Nom de la tache"
+            android:hint="@string/name_task"
             android:paddingBottom="5dp"/>
 
         <EditText
             android:id="@+id/update_task_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Description"
+            android:hint="@string/description"
             android:paddingBottom="5dp"/>
 
         <LinearLayout
@@ -61,13 +61,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Heures"
+                android:text="@string/hours"
                 android:layout_marginHorizontal="20dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Minutes"
+                android:text="@string/minutes"
                 android:layout_marginHorizontal="17.5dp"/>
         </LinearLayout>
 
@@ -93,7 +93,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:focusableInTouchMode="false"
-            android:hint="Date de début"
+            android:hint="@string/begin_date"
             android:paddingBottom="5dp"/>
 
         <EditText
@@ -101,7 +101,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:focusableInTouchMode="false"
-            android:hint="Date de fin"
+            android:hint="@string/end_date"
             android:paddingBottom="5dp"/>
 
         <EditText
@@ -109,14 +109,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textVisiblePassword"
-            android:hint="Contexte"
+            android:hint="@string/context"
             android:paddingBottom="5dp"/>
 
         <AutoCompleteTextView
             android:id="@+id/update_task_project"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Nom du projet"
+            android:hint="@string/project_name"
             android:completionThreshold="1"
             android:inputType="textVisiblePassword"
             android:paddingBottom="5dp"/>
@@ -130,6 +130,6 @@
             android:id="@+id/update_task_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mettre à jour"/>
+            android:text="@string/update"/>
     </LinearLayout>
 </ScrollView>

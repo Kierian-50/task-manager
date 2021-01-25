@@ -12,7 +12,7 @@
         android:roundIcon="@drawable/logo_project_management"
         android:supportsRtl="true"
         android:theme="@style/Theme.GestionDeProjet">
-        <activity android:name=".taskDescActivity"></activity>
+        <activity android:name=".taskDescActivity" />
         <activity android:name=".UpdateTask" />
         <activity android:name=".taskCreateActivity" />
         <activity android:name=".ListTask" />
