@@ -12,5 +12,11 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/moderate_blue</item>
         <!-- Customize your theme here. -->
+        <item name="android:windowAnimationStyle">@style/WindowsAnimationTransition</item>
+    </style>
+
+    <style name="WindowsAnimationTransition">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 </resources>

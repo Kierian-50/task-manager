@@ -2,6 +2,7 @@ package com.example.gestiondeprojet;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -71,6 +72,8 @@ public class Connexion extends AppCompatActivity {
      */
     private ImageButton translationButton;
 
+    private ImageButton colorMode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +85,7 @@ public class Connexion extends AppCompatActivity {
         this.id = findViewById(R.id.identifient);
         this.password = findViewById(R.id.password);
         this.translationButton = findViewById(R.id.connection_translation);
+        this.colorMode = findViewById(R.id.connection_brightness_mode);
         this.context = this;
 
         // Go to the create account' activity
@@ -171,6 +175,35 @@ public class Connexion extends AppCompatActivity {
                 });
                 AlertDialog mDialog = mBuilder.create();
                 mDialog.show();
+            }
+        });
+
+        // When the user click on the brightness button it turns to dark or light mode according to
+        // the current mode
+        // Quand l'utilisateur clique sur le boutton de luminotsité, ca change pour le dark mode
+        // ou le mode jour selon le mode
+        // TODO gérer le bug de changement de langue lors du changement de mode de couleur
+        this.colorMode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int nightModeFlags =
+                        context.getResources().getConfiguration().uiMode &
+                                Configuration.UI_MODE_NIGHT_MASK;
+                switch (nightModeFlags) {
+                    case Configuration.UI_MODE_NIGHT_YES:
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        break;
+
+                    case Configuration.UI_MODE_NIGHT_NO:
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        break;
+
+                    case Configuration.UI_MODE_NIGHT_UNDEFINED:
+                        String text = "Le changement de mode n'est pas possible ! ";
+                        Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
+                        toast.show();
+                        break;
+                }
             }
         });
     }
