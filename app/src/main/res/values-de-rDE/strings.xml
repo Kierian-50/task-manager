@@ -51,4 +51,5 @@
     <string name="cancel">Abbrechen</string>
 
     <string name="choose_language">Sprache wählen…</string>
+    <string name="brithness_mode_impossible">Eine Änderung des Modus ist nicht möglich !</string>
 </resources>

@@ -47,4 +47,5 @@
     <string name="text_on_long_item_click">Que voulez vous faire avec la tache ?</string>
 
     <string name="choose_language">Choisissez la langue…</string>
+    <string name="brithness_mode_impossible">Le changement de mode n\'est pas possible !</string>
 </resources>

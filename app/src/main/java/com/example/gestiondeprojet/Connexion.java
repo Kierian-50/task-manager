@@ -72,6 +72,10 @@ public class Connexion extends AppCompatActivity {
      */
     private ImageButton translationButton;
 
+    /**
+     * The component that allows to change the brightness mode
+     * Le composant qui permet de changer le mode de luminosité
+     */
     private ImageButton colorMode;
 
     @Override
@@ -199,7 +203,7 @@ public class Connexion extends AppCompatActivity {
                         break;
 
                     case Configuration.UI_MODE_NIGHT_UNDEFINED:
-                        String text = "Le changement de mode n'est pas possible ! ";
+                        String text = getResources().getString(R.string.brithness_mode_impossible);
                         Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
                         toast.show();
                         break;

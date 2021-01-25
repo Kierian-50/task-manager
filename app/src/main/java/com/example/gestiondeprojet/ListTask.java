@@ -1,6 +1,7 @@
 package com.example.gestiondeprojet;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -19,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.gestiondeprojet.adapter.TaskAdapter;
 import com.example.gestiondeprojet.models.Task;
@@ -66,12 +68,6 @@ public class ListTask extends AppCompatActivity {
      * l'utilisateur clique dessus, il arrive à l'activité de création de tache.
      */
     private ImageButton addTask;
-
-    /**
-     * This imageButton displays a popup that indicates the user on how to delete a task.
-     * Cette imageButton affiche une popup qui indique comment supprimer une tâche.
-     */
-    private ImageButton removeTask;
 
     /**
      * This refers to the componant which displays the list of tasks.
@@ -123,6 +119,12 @@ public class ListTask extends AppCompatActivity {
      */
     private ImageButton translationButton;
 
+    /**
+     * The component that allows to change the brightness mode
+     * Le composant qui permet de changer le mode de luminosité
+     */
+    private ImageButton buttonMode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,12 +133,12 @@ public class ListTask extends AppCompatActivity {
         // Init attributes
         this.context = this;
         this.addTask = findViewById(R.id.add_task);
-        this.removeTask = findViewById(R.id.remove_task);
         this.listView = findViewById(R.id.shop_list_view);
         this.searchIcon = findViewById(R.id.search_icon);
         this.searchContent = findViewById(R.id.search_content);
         this.sortBy = findViewById(R.id.spinner_sort_by);
         this.translationButton = findViewById(R.id.listTask_translation);
+        this.buttonMode = findViewById(R.id.listTask_brightness);
 
         final ArrayList<String> possibleSort = new ArrayList<>(Arrays.asList(
                 getResources().getString(R.string.by_state),
@@ -200,20 +202,6 @@ public class ListTask extends AppCompatActivity {
             }
         });
 
-        // If the user click on the remove button it displays a popup that helps the user on the
-        // deletion of tasks.
-        // Si l'utilisateur clique sur le boutton de suppression une popup s'affiche qui aide
-        // l'utilisateur sur la suppression de tâche.
-        this.removeTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder adb = new AlertDialog.Builder(ListTask.this);
-                adb.setTitle(getResources().getString(R.string.remove_task_text));
-                adb.setMessage(getResources().getString(R.string.text_remove_explain));
-                adb.setPositiveButton("Ok", null);
-                adb.show();
-            }
-        });
 
         // If the user make a long click on an item it displays a popup to ask him if he wants to
         // delete or update a task or cancel.
@@ -405,7 +393,6 @@ public class ListTask extends AppCompatActivity {
                         Configuration config = new Configuration();
                         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
                         dialog.dismiss();
-                        //TODO check recreate
                         Intent intent = new Intent(getApplicationContext(), ListTask.class);
                         startActivity(intent);
                         finish();
@@ -413,6 +400,39 @@ public class ListTask extends AppCompatActivity {
                 });
                 androidx.appcompat.app.AlertDialog mDialog = mBuilder.create();
                 mDialog.show();
+            }
+        });
+
+        // When the user click on the brightness button it turns to dark or light mode according to
+        // the current mode
+        // Quand l'utilisateur clique sur le boutton de luminotsité, ca change pour le dark mode
+        // ou le mode jour selon le mode
+        // TODO gérer le bug de changement de langue lors du changement de mode de couleur
+        this.buttonMode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int nightModeFlags =
+                        context.getResources().getConfiguration().uiMode &
+                                Configuration.UI_MODE_NIGHT_MASK;
+                switch (nightModeFlags) {
+                    case Configuration.UI_MODE_NIGHT_YES:
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        break;
+
+                    case Configuration.UI_MODE_NIGHT_NO:
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        break;
+
+                    case Configuration.UI_MODE_NIGHT_UNDEFINED:
+                        String text = getResources().getString(R.string.brithness_mode_impossible);
+                        Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
+                        toast.show();
+                        break;
+                }
+                // Relaunch the activity else crash
+                Intent intent = new Intent(getApplicationContext(), ListTask.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
