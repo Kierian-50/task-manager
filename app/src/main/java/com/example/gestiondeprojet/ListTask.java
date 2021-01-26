@@ -48,9 +48,9 @@ import static com.example.gestiondeprojet.Constants.PROJECT;
 import static com.example.gestiondeprojet.Constants.STATE;
 import static com.example.gestiondeprojet.Constants.TASK;
 import static com.example.gestiondeprojet.Constants.availableLanguege;
-import static com.example.gestiondeprojet.Constants.currentIdTask;
 import static com.example.gestiondeprojet.Constants.currentSort;
 import static com.example.gestiondeprojet.Constants.currentUsername;
+import static com.example.gestiondeprojet.Util.findPositionWithId;
 import static java.util.Locale.FRANCE;
 import static java.util.Locale.GERMANY;
 import static java.util.Locale.UK;
@@ -231,17 +231,16 @@ public class ListTask extends AppCompatActivity {
                 // Affiche une petite popup qui demande si l'utilisateur veut mettre à jour ou
                 // supprimer ou annuler.
                 AlertDialog.Builder adb = new AlertDialog.Builder(ListTask.this);
-                adb.setTitle("Que voulez vous faire avec la tache ?");
-                final int positionToModify = position;
+                adb.setTitle(getResources().getString(R.string.text_popup));
                 adb.setNeutralButton(getResources().getString(R.string.cancel), null);
                 adb.setPositiveButton(getResources().getString(R.string.update), new AlertDialog.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // If he wants to update go to the update' activity
                         // S'il veut mettre à jour alors la page de mise à jour va s'afficher.
-                        currentIdTask = taskList.get(position).getId(); // Set the index of the task (not the id)
-                        Intent createTask = new Intent(getApplicationContext(), UpdateTask.class);
-                        startActivity(createTask);
+                        Intent intent = new Intent(getApplicationContext(), UpdateTask.class);
+                        intent.putExtra("taskId", taskList.get(position).getId());
+                        startActivity(intent);
                         finish();
                     }});
                 adb.setNegativeButton(getResources().getString(R.string.remove), new AlertDialog.OnClickListener() {
@@ -249,9 +248,10 @@ public class ListTask extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         // Remove the task, if he clicks on delete
                         // Supprime la tache si l'utilisateur clique sur le bouton.
-                        taskList.remove(positionToModify);
+                        int idToRemove = taskList.get(position).getId();
+                        taskList.remove(position);
                         taskAdapter.notifyDataSetChanged();
-                        Util.removeTask(currentUsername+ JSON_EXTENSION, positionToModify, context);
+                        Util.removeTask(currentUsername+JSON_EXTENSION, findPositionWithId(idToRemove, context), context);
                     }});
                 adb.show();
 
@@ -265,9 +265,9 @@ public class ListTask extends AppCompatActivity {
         this.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                currentIdTask = taskList.get(position).getId();
-                Intent createTask = new Intent(getApplicationContext(), taskDescActivity.class);
-                startActivity(createTask);
+                Intent intent = new Intent(getApplicationContext(), taskDescActivity.class);
+                intent.putExtra("taskId", taskList.get(position).getId());
+                startActivity(intent);
                 finish();
             }
         });

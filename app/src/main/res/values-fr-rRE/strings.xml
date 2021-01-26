@@ -49,4 +49,11 @@
     <string name="choose_language">Choisissez la langue…</string>
     <string name="brithness_mode_impossible">Le changement de mode n\'est pas possible !</string>
     <string name="remember_me">Se souvenir de moi</string>
+
+    <string name="password_not_same">Les mots de passe ne sont pas identiques !</string>
+    <string name="id_already_used">L\'identifiant est déjà utilisé !</string>
+    <string name="password_incorrect">Le mot de passe n\'est pas correct !</string>
+    <string name="id_incorrect">L\'identifiant n\'est pas dans nos bases de données !</string>
+
+    <string name="text_popup">Que voulez vous faire avec la tache ?</string>
 </resources>

@@ -50,11 +50,16 @@
     <string name="by_duration">Par durée</string>
     <string name="by_project">Par projet</string>
 
-    <string name="remove_task_text">Suppression de tache</string>
-    <string name="text_remove_explain">Pour supprimer une tâche, il vous suffit de cliquer sur la tâche et dans la page affichant les attributs de la tâche, il faut cliquer sur la corbeille ou vous pouvez rester appuyer sur une tâche pendant une seconde et une fenêtre va vous inviter à supprimer la tâche</string>
     <string name="text_on_long_item_click">Que voulez vous faire avec la tache ?</string>
 
     <string name="choose_language">Choose Language…</string>
     <string name="brithness_mode_impossible">Le changement de mode n\'est pas possible !</string>
     <string name="remember_me">Se souvenir de moi</string>
+
+    <string name="password_not_same">Les mots de passe ne sont pas identiques !</string>
+    <string name="id_already_used">L\'identifiant est déjà utilisé !</string>
+    <string name="password_incorrect">Le mot de passe n\'est pas correct !</string>
+    <string name="id_incorrect">L\'identifiant n\'est pas dans nos bases de données !</string>
+    <string name="text_popup">Que voulez vous faire avec la tache ?</string>
+
 </resources>

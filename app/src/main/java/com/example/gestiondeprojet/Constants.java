@@ -24,6 +24,5 @@ public final class Constants {
 
     public static int currentSort; // Allow to have the current sort chosen by the user
     public static String currentUsername;
-    public static int currentIdTask;
 
 }

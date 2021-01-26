@@ -21,7 +21,6 @@ import java.util.Date;
 import static com.example.gestiondeprojet.Constants.DOING;
 import static com.example.gestiondeprojet.Constants.JSON_EXTENSION;
 import static com.example.gestiondeprojet.Constants.TODO;
-import static com.example.gestiondeprojet.Constants.currentIdTask;
 import static com.example.gestiondeprojet.Constants.currentUsername;
 import static com.example.gestiondeprojet.Util.findPositionWithId;
 
@@ -99,10 +98,15 @@ public class taskDescActivity extends AppCompatActivity {
      */
     private Context context;
 
+    private int taskId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_a_task);
+
+        Bundle bundle = getIntent().getExtras();
+        this.taskId = bundle.getInt("taskId", 0);
 
         // Init attributes of the toolbar
         this.context = this;
@@ -127,6 +131,7 @@ public class taskDescActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), UpdateTask.class);
+                intent.putExtra("taskId", taskId);
                 startActivity(intent);
                 finish();
             }
@@ -137,7 +142,7 @@ public class taskDescActivity extends AppCompatActivity {
         this.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Util.removeTask(currentUsername+JSON_EXTENSION, findPositionWithId(currentIdTask, context), context);
+                Util.removeTask(currentUsername+JSON_EXTENSION, findPositionWithId(taskId, context), context);
                 Intent intent = new Intent(getApplicationContext(), ListTask.class);
                 startActivity(intent);
                 finish();
@@ -165,7 +170,7 @@ public class taskDescActivity extends AppCompatActivity {
             taskArray = json.getJSONArray("Task");
             // Find the task that the user wants to display
             // Trouve la tâche que l'utilisateur veux voir
-            currentTask = taskArray.getJSONObject(findPositionWithId(currentIdTask, this));
+            currentTask = taskArray.getJSONObject(findPositionWithId(this.taskId, this));
 
             // Display the values of the task in the components
             // Affiche les valeurs de la tâche dans les composants

@@ -158,8 +158,6 @@ public class taskCreateActivity extends AppCompatActivity {
         this.nbPickerMinutes.setMinValue(0);
         this.nbPickerMinutes.setMaxValue(59);
 
-        //TODO gérer le calendrier selon la région
-
         // If the user select the edittext about the begin date of the task it displays a
         // better display to choose the date.
         // Si l'utilisateur choisi l'edit text concernant la date de début de la tache, ça affiche

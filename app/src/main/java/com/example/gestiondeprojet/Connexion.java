@@ -25,6 +25,7 @@ import org.json.JSONObject;
 import java.util.Locale;
 
 import static com.example.gestiondeprojet.Constants.DEBUGG;
+import static com.example.gestiondeprojet.Constants.JSON_EXTENSION;
 import static com.example.gestiondeprojet.Constants.availableLanguege;
 import static com.example.gestiondeprojet.Constants.currentSort;
 import static com.example.gestiondeprojet.Constants.currentUsername;
@@ -138,11 +139,11 @@ public class Connexion extends AppCompatActivity {
             public void onClick(View v) {
                 // If the user' json exist then the user has an account
                 // Si le json de l'utilisateur existe alors l'utilisateur a un compte
-                if(Util.fileAlreadyExist(id.getText()+".json", context)){
+                if(Util.fileAlreadyExist(id.getText()+JSON_EXTENSION, context)){
                     Log.e(DEBUGG, "User file "+id.getText()+".json exist !");
 
                     // Lis le json / Read the json
-                    JSONObject userJson = Util.readJsonFile(id.getText()+".json", context);
+                    JSONObject userJson = Util.readJsonFile(id.getText()+JSON_EXTENSION, context);
                     String passwordStr = null;
                     try {
                         // Trouve le password dans le json
@@ -154,9 +155,10 @@ public class Connexion extends AppCompatActivity {
                     // Check the password
                     if(passwordStr == null || !passwordStr.equals(String.valueOf(password.getText()))){
                         password.setText("");
-                        String text = "Le mot de passe n'est pas correct ! ";
-                        Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
-                        toast.show();
+                        android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(Connexion.this);
+                        adb.setTitle(getResources().getString(R.string.password_incorrect));
+                        adb.setPositiveButton("Ok", null);
+                        adb.show();
                     }else{
                         savePreferences();
                         // Entry point of the next activity
@@ -173,9 +175,10 @@ public class Connexion extends AppCompatActivity {
                     Log.e(DEBUGG, "User file "+id.getText()+".json doesn't exist !");
                     id.setText("");
                     password.setText("");
-                    String text = "L'identifiant n'est pas dans nos bases de données ! ";
-                    Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
-                    toast.show();
+                    android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(Connexion.this);
+                    adb.setTitle(getResources().getString(R.string.id_incorrect));
+                    adb.setPositiveButton("Ok", null);
+                    adb.show();
                 }
             }
         });

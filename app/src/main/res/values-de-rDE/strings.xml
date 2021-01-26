@@ -53,4 +53,11 @@
     <string name="choose_language">Sprache wählen…</string>
     <string name="brithness_mode_impossible">Eine Änderung des Modus ist nicht möglich !</string>
     <string name="remember_me">Meine Anmeldeinformationen speichern</string>
+
+    <string name="password_not_same">Die Passwörter sind nicht identisch!</string>
+    <string name="id_already_used">Das Login ist bereits in Verwendung!</string>
+    <string name="password_incorrect">Das Passwort ist falsch!</string>
+    <string name="id_incorrect">Das Login ist nicht in unseren Datenbanken!</string>
+
+    <string name="text_popup">Was wollen Sie mit dem Aufgabe machen?</string>
 </resources>

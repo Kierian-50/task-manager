@@ -27,8 +27,16 @@ import static java.util.Locale.UK;
  */
 public class SplashScreenActivity extends AppCompatActivity {
 
+    /**
+     * The saved preferences are contains in this attributes.
+     * Les préférences enregistrées sont contenues dans cet attributs
+     */
     private SharedPreferences mPreferences;
 
+    /**
+     * This attribute allows to write the preferences.
+     * Cet attribut permet d'écrire les préférences.
+     */
     private SharedPreferences.Editor mEditor;
 
     @Override
@@ -36,9 +44,11 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+        // Init attributes
         this.mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         this.mEditor = mPreferences.edit();
 
+        // Set the brightness mode according to the preferences
         String mode = this.mPreferences.getString(getString(R.string.brigthness_mode), "LIGHT_MODE");
 
         if(mode.equals("LIGHT_MODE")){
@@ -47,6 +57,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
 
+        // Set the language according to the preferences
         String language = this.mPreferences.getString(getString(R.string.language), "FRANCE");
 
         if(language.equals("FRANCE")){

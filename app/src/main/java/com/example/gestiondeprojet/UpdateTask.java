@@ -46,7 +46,6 @@ import static com.example.gestiondeprojet.Constants.PROJECT;
 import static com.example.gestiondeprojet.Constants.STATE;
 import static com.example.gestiondeprojet.Constants.TASK;
 import static com.example.gestiondeprojet.Constants.TODO;
-import static com.example.gestiondeprojet.Constants.currentIdTask;
 import static com.example.gestiondeprojet.Constants.currentUsername;
 import static com.example.gestiondeprojet.Util.findPositionWithId;
 
@@ -165,10 +164,15 @@ public class UpdateTask extends AppCompatActivity {
      */
     private ImageButton backButton;
 
+    private int taskIdToDisplay;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_task);
+
+        Bundle bundle = getIntent().getExtras();
+        this.taskIdToDisplay = bundle.getInt("taskId", 0);
 
         // Init attributes
         this.stateSpinner = findViewById(R.id.update_spinner_state);
@@ -284,7 +288,7 @@ public class UpdateTask extends AppCompatActivity {
             // Display the current values of the tasks
             // Affichage des valeurs actuelles de la tache
             this.taskArray = json.getJSONArray(TASK);
-            this.currentTask = taskArray.getJSONObject(findPositionWithId(currentIdTask, context));
+            this.currentTask = taskArray.getJSONObject(findPositionWithId(this.taskIdToDisplay, context));
 
             this.taskId = this.currentTask.getInt(ID);
 
@@ -341,7 +345,7 @@ public class UpdateTask extends AppCompatActivity {
                         !errorDate){
                     try {
                         // Create the task
-                        taskArray.remove(findPositionWithId(currentIdTask, context)); // Supprime la tache du json avant de la réécrire
+                        taskArray.remove(findPositionWithId(taskIdToDisplay, context)); // Supprime la tache du json avant de la réécrire
                         currentTask.put(ID, taskId);
                         currentTask.put(NAME, taskName.getText().toString());
                         currentTask.put(STATE, findStateInSpinner(stateSpinner.getSelectedItem().toString()));

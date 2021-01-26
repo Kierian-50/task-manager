@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -86,9 +85,10 @@ public class CreateAccount extends AppCompatActivity {
                     // Check that the id is not already used.
                     // Vérifie que l'identifiant n'est pas déjà utilisé.
                     if(Util.fileAlreadyExist(id.getText()+ JSON_EXTENSION, context)){
-                        String text = "L'identifiant est déjà utilisé !";
-                        Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
-                        toast.show();
+                        android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(CreateAccount.this);
+                        adb.setTitle(getResources().getString(R.string.id_already_used));
+                        adb.setPositiveButton("Ok", null);
+                        adb.show();
                         firstPassword.getText().clear();
                         secondPassword.getText().clear();
                         id.getText().clear();
@@ -116,9 +116,10 @@ public class CreateAccount extends AppCompatActivity {
                         }
                     }
                 }else{
-                    String text = "Les deux mots de passe ne sont pas identiques !";
-                    Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
-                    toast.show();
+                    android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(CreateAccount.this);
+                    adb.setTitle(getResources().getString(R.string.password_not_same));
+                    adb.setPositiveButton("Ok", null);
+                    adb.show();
                     firstPassword.getText().clear();
                     secondPassword.getText().clear();
                 }
