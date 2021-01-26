@@ -1,7 +1,6 @@
 package com.example.gestiondeprojet;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -32,8 +31,6 @@ public class SplashScreenActivity extends AppCompatActivity {
         Locale.setDefault(FRANCE);
         Configuration config = new Configuration();
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-
-        // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
         // Displays the version of the app
         // Affiche la version de l'activité

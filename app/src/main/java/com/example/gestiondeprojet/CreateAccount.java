@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -55,6 +56,12 @@ public class CreateAccount extends AppCompatActivity {
      */
     private Context context;
 
+    /**
+     * The component that allows to go back in the activity.
+     * Le composant qui permet de revenir dans les activités.
+     */
+    private ImageButton backButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +72,7 @@ public class CreateAccount extends AppCompatActivity {
         this.id = findViewById(R.id.identifient_create_account);
         this.firstPassword = findViewById(R.id.password_create_account_one);
         this.secondPassword = findViewById(R.id.password_create_account_two);
+        this.backButton = findViewById(R.id.create_account_back_button);
         this.context = this;
 
         // When we click on create account
@@ -114,6 +122,17 @@ public class CreateAccount extends AppCompatActivity {
                     firstPassword.getText().clear();
                     secondPassword.getText().clear();
                 }
+            }
+        });
+
+        // If the user clicks on the back button then it goes back to the list.
+        // Si l'utilisateur appuie sur le bouton de retour alors on retourne à la liste
+        this.backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Connexion.class);
+                startActivity(intent);
+                finish();
             }
         });
     }

@@ -292,7 +292,13 @@ public class ListTask extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 // hide selection text
                 // Cache le texte de selection
-                ((TextView)view).setText(null);
+                // Avoid crash when the user click a lot on the dark/light mode button
+                // Evite le crash quand l'utilisateur appuie beaucoup sur le bouton du mode sombre.
+                try {
+                    ((TextView)view).setText(null);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 // Find the setting chosen
                 // Trouve le filtre choisi

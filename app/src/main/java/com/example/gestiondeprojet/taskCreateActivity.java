@@ -16,6 +16,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.NumberPicker;
 
 import org.json.JSONArray;
@@ -127,6 +128,12 @@ public class taskCreateActivity extends AppCompatActivity {
      */
     private DatePickerDialog.OnDateSetListener dateSetListenerEnd;
 
+    /**
+     * The component which allows to go back to the list.
+     * Le composant qui permet de revenir sur l'activité d'affichage de la liste.
+     */
+    private ImageButton backButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,6 +147,7 @@ public class taskCreateActivity extends AppCompatActivity {
         this.taskEndDate = findViewById(R.id.task_end_date);
         this.saveTask = findViewById(R.id.create_task_button);
         this.project = findViewById(R.id.task_project);
+        this.backButton = findViewById(R.id.create_back_button);
         this.context = this;
 
         this.nbPickerHour = findViewById(R.id.task_duration_hour);
@@ -326,6 +334,17 @@ public class taskCreateActivity extends AppCompatActivity {
                     adb.setPositiveButton("Ok", null);
                     adb.show();
                 }
+            }
+        });
+
+        // If the user clicks on the back button then it goes back to the list.
+        // Si l'utilisateur appuie sur le bouton de retour alors on retourne à la liste
+        this.backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ListTask.class);
+                startActivity(intent);
+                finish();
             }
         });
     }

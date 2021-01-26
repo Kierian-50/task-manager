@@ -215,6 +215,5 @@ public class Connexion extends AppCompatActivity {
     @Override
     public void recreate() {
         super.recreate();
-        //TODO redirect to splashsreen for the reacreate or something make more nice
     }
 }
