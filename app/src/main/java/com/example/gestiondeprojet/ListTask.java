@@ -7,8 +7,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -125,6 +127,18 @@ public class ListTask extends AppCompatActivity {
      */
     private ImageButton buttonMode;
 
+    /**
+     * The saved preferences are contains in this attributes.
+     * Les préférences enregistrées sont contenues dans cet attributs
+     */
+    private SharedPreferences mPreferences;
+
+    /**
+     * This attribute allows to write the preferences.
+     * Cet attribut permet d'écrire les préférences.
+     */
+    private SharedPreferences.Editor mEditor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,6 +153,8 @@ public class ListTask extends AppCompatActivity {
         this.sortBy = findViewById(R.id.spinner_sort_by);
         this.translationButton = findViewById(R.id.listTask_translation);
         this.buttonMode = findViewById(R.id.listTask_brightness);
+        this.mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        this.mEditor = mPreferences.edit();
 
         final ArrayList<String> possibleSort = new ArrayList<>(Arrays.asList(
                 getResources().getString(R.string.by_state),
@@ -388,13 +404,13 @@ public class ListTask extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         if(which==0){
                             Locale.setDefault(FRANCE);
-                            //recreate();
+                            saveLanguage("FRANCE");
                         }else if(which==1){
                             Locale.setDefault(UK);
-                            //recreate();
+                            saveLanguage("UK");
                         }else if(which==2){
                             Locale.setDefault(GERMANY);
-                            //recreate();
+                            saveLanguage("GERMANY");
                         }
                         Configuration config = new Configuration();
                         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
@@ -423,10 +439,12 @@ public class ListTask extends AppCompatActivity {
                 switch (nightModeFlags) {
                     case Configuration.UI_MODE_NIGHT_YES:
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        saveMode("LIGHT_MODE");
                         break;
 
                     case Configuration.UI_MODE_NIGHT_NO:
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        saveMode("DARK_MODE");
                         break;
 
                     case Configuration.UI_MODE_NIGHT_UNDEFINED:
@@ -441,5 +459,27 @@ public class ListTask extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    /**
+     * This method allows to write the brightness mode chosen by the user in the preferences.
+     * Cette méthode permet d'écrire les préférences choisies concernant la luminosité dans les
+     * préférences.
+     * @param mode The selected mode / Le mode choisi
+     */
+    private void saveMode(String mode){
+        mEditor.putString(getString(R.string.brigthness_mode), mode);
+        mEditor.commit();
+    }
+
+    /**
+     * This method allows to write the language chosen by the user in the preferences.
+     * Cette méthode permet d'écrire les préférences choisies concernant la langue dans les
+     * préférences.
+     * @param language The selected language / La langue choisie
+     */
+    private void saveLanguage(String language){
+        mEditor.putString(getString(R.string.language), language);
+        mEditor.commit();
     }
 }

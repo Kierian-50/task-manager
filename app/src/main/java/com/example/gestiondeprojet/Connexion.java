@@ -7,11 +7,14 @@ import androidx.appcompat.app.AppCompatDelegate;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -78,6 +81,24 @@ public class Connexion extends AppCompatActivity {
      */
     private ImageButton colorMode;
 
+    /**
+     * The component that allows to say if the user want to save the id and password.
+     * Le composant qui permet de dire si l'utilisateur veut enregistrer son id et son mdp.
+     */
+    private CheckBox rememberMeCheckBox;
+
+    /**
+     * The saved preferences are contains in this attributes.
+     * Les préférences enregistrées sont contenues dans cet attributs
+     */
+    private SharedPreferences mPreferences;
+
+    /**
+     * This attribute allows to write the preferences.
+     * Cet attribut permet d'écrire les préférences.
+     */
+    private SharedPreferences.Editor mEditor;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +111,13 @@ public class Connexion extends AppCompatActivity {
         this.password = findViewById(R.id.password);
         this.translationButton = findViewById(R.id.connection_translation);
         this.colorMode = findViewById(R.id.connection_brightness_mode);
+        this.rememberMeCheckBox = findViewById(R.id.remember_me);
         this.context = this;
+        this.mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        this.mEditor = mPreferences.edit();
+
+        // Configure the text edit according to the preferences
+        checkSharedPreferences();
 
         // Go to the create account' activity
         // Va à la page de création de compte
@@ -131,6 +158,7 @@ public class Connexion extends AppCompatActivity {
                         Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
                         toast.show();
                     }else{
+                        savePreferences();
                         // Entry point of the next activity
                         // Point d'entrée de la prochaine activité
                         currentUsername = String.valueOf(id.getText());
@@ -164,12 +192,15 @@ public class Connexion extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         if(which==0){
                             Locale.setDefault(FRANCE);
+                            saveLanguage("FRANCE");
                             recreate();
                         }else if(which==1){
                             Locale.setDefault(UK);
+                            saveLanguage("UK");
                             recreate();
                         }else if(which==2){
                             Locale.setDefault(GERMANY);
+                            saveLanguage("GERMANY");
                             recreate();
                         }
                         Configuration config = new Configuration();
@@ -196,10 +227,12 @@ public class Connexion extends AppCompatActivity {
                 switch (nightModeFlags) {
                     case Configuration.UI_MODE_NIGHT_YES:
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        saveMode("LIGHT_MODE");
                         break;
 
                     case Configuration.UI_MODE_NIGHT_NO:
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        saveMode("DARK_MODE");
                         break;
 
                     case Configuration.UI_MODE_NIGHT_UNDEFINED:
@@ -212,8 +245,73 @@ public class Connexion extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void recreate() {
-        super.recreate();
+    /**
+     * This method allows to write the brightness mode chosen by the user in the preferences.
+     * Cette méthode permet d'écrire les préférences choisies concernant la luminosité dans les
+     * préférences.
+     * @param mode The selected mode / Le mode choisi
+     */
+    private void saveMode(String mode){
+        mEditor.putString(getString(R.string.brigthness_mode), mode);
+        mEditor.commit();
+    }
+
+    /**
+     * This method allows to write the language chosen by the user in the preferences.
+     * Cette méthode permet d'écrire les préférences choisies concernant la langue dans les
+     * préférences.
+     * @param language The selected language / La langue choisie
+     */
+    private void saveLanguage(String language){
+        mEditor.putString(getString(R.string.language), language);
+        mEditor.commit();
+    }
+
+
+    /**
+     * This method allows to save the preferences for the id and password.
+     * Cette méthode permet d'enregistrer les préférences pour l'id et le mdp.
+     */
+    private void savePreferences() {
+        if(this.rememberMeCheckBox.isChecked()){
+            mEditor.putString(getString(R.string.checkbok_remember_me), "True");
+            mEditor.commit();
+
+            String name = this.id.getText().toString();
+            mEditor.putString(getString(R.string.username), name);
+            mEditor.commit();
+
+            String passwordStr = this.password.getText().toString();
+            mEditor.putString(getString(R.string.password), passwordStr);
+            mEditor.commit();
+        }else{
+            mEditor.putString(getString(R.string.checkbok_remember_me), "False");
+            mEditor.commit();
+
+            mEditor.putString(getString(R.string.username), "");
+            mEditor.commit();
+
+            mEditor.putString(getString(R.string.password), "");
+            mEditor.commit();
+        }
+    }
+
+    /**
+     * This method allows to use the save preferences and displays this preferences
+     * Cette methode permet d'utiliser les préférences enregistrées et de les afficher.
+     */
+    private void checkSharedPreferences() {
+        String checkbox = this.mPreferences.getString(getString(R.string.checkbok_remember_me), "False");
+        String name = this.mPreferences.getString(getString(R.string.username), "");
+        String password = this.mPreferences.getString(getString(R.string.password), "");
+
+        this.id.setText(name);
+        this.password.setText(password);
+
+        if(checkbox.equals("True")){
+            this.rememberMeCheckBox.setChecked(true);
+        }else{
+            this.rememberMeCheckBox.setChecked(false);
+        }
     }
 }
