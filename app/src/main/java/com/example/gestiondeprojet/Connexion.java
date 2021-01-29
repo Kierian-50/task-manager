@@ -26,6 +26,7 @@ import java.util.Locale;
 
 import static com.example.gestiondeprojet.Constants.DEBUGG;
 import static com.example.gestiondeprojet.Constants.JSON_EXTENSION;
+import static com.example.gestiondeprojet.Constants.PASSWORD;
 import static com.example.gestiondeprojet.Constants.availableLanguege;
 import static com.example.gestiondeprojet.Constants.currentSort;
 import static com.example.gestiondeprojet.Constants.currentUsername;
@@ -147,7 +148,7 @@ public class Connexion extends AppCompatActivity {
                     String passwordStr = null;
                     try {
                         // Trouve le password dans le json
-                        passwordStr = userJson.getString("Password");
+                        passwordStr = userJson.getString(PASSWORD);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

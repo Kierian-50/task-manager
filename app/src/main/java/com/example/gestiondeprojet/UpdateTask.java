@@ -164,6 +164,10 @@ public class UpdateTask extends AppCompatActivity {
      */
     private ImageButton backButton;
 
+    /**
+     * The id of the task to update.
+     * L'identifiant de la tache a mettre à jour.
+     */
     private int taskIdToDisplay;
 
     @Override
@@ -376,7 +380,7 @@ public class UpdateTask extends AppCompatActivity {
                     // Display a popup which says that the begin date is after the end date.
                     // Affiche une popup qui prévient que la date de début est après la date de fin.
                     AlertDialog.Builder adb = new AlertDialog.Builder(UpdateTask.this);
-                    adb.setTitle("La date de début ne peut pas être après la date de fin !");
+                    adb.setTitle(getResources().getString(R.string.error_date));
                     adb.setPositiveButton("Ok", null);
                     adb.show();
                 }else{
@@ -400,7 +404,7 @@ public class UpdateTask extends AppCompatActivity {
                     // Display a popup error
                     // Affiche une popup d'erreur
                     AlertDialog.Builder adb = new AlertDialog.Builder(UpdateTask.this);
-                    adb.setTitle("Veuillez remplir tous les champs obligatoires");
+                    adb.setTitle(getResources().getString(R.string.fill_required_fill));
                     adb.setPositiveButton("Ok", null);
                     adb.show();
                 }

@@ -98,6 +98,10 @@ public class taskDescActivity extends AppCompatActivity {
      */
     private Context context;
 
+    /**
+     * The id of the task to update.
+     * L'identifiant de la tache a mettre à jour
+     */
     private int taskId;
 
     @Override
