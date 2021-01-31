@@ -1,4 +1,4 @@
-package com.example.gestiondeprojet;
+package com.example.gestiondeprojet.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +18,10 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import com.example.gestiondeprojet.R;
+import com.example.gestiondeprojet.Util;
+import com.example.gestiondeprojet.sql.DatabaseHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -100,11 +104,19 @@ public class Connexion extends AppCompatActivity {
      * Cet attribut permet d'écrire les préférences.
      */
     private SharedPreferences.Editor mEditor;
+
+    /**
+     * The attribute that allows to make the link with the database.
+     * L'attribut qui permet de faire le lien avec la base de données.
+     */
+    private DatabaseHelper databaseHelper;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connexion);
+
+        databaseHelper = new DatabaseHelper(this);
 
         // Init attributes
         this.createAccount = findViewById(R.id.create_account_button);
@@ -138,48 +150,31 @@ public class Connexion extends AppCompatActivity {
         this.connection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // If the user' json exist then the user has an account
-                // Si le json de l'utilisateur existe alors l'utilisateur a un compte
-                if(Util.fileAlreadyExist(id.getText()+JSON_EXTENSION, context)){
-                    Log.e(DEBUGG, "User file "+id.getText()+".json exist !");
-
-                    // Lis le json / Read the json
-                    JSONObject userJson = Util.readJsonFile(id.getText()+JSON_EXTENSION, context);
-                    String passwordStr = null;
-                    try {
-                        // Trouve le password dans le json
-                        passwordStr = userJson.getString(PASSWORD);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    // Check the password
-                    if(passwordStr == null || !passwordStr.equals(String.valueOf(password.getText()))){
+                if (databaseHelper.checkUser(id.getText().toString().trim(),
+                        password.getText().toString().trim())) {
+                    // Entry point of the next activity
+                    // Point d'entrée de la prochaine activité
+                    savePreferences();
+                    currentUsername = String.valueOf(id.getText());
+                    currentSort = 0; // By default the current sort is 0
+                    Intent intent = new Intent(getApplicationContext(), ListTask.class);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    if(databaseHelper.checkUser(id.getText().toString())){
                         password.setText("");
                         android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(Connexion.this);
                         adb.setTitle(getResources().getString(R.string.password_incorrect));
                         adb.setPositiveButton("Ok", null);
                         adb.show();
                     }else{
-                        savePreferences();
-                        // Entry point of the next activity
-                        // Point d'entrée de la prochaine activité
-                        currentUsername = String.valueOf(id.getText());
-                        currentSort = 0; // By default the current sort is 0
-                        Intent intent = new Intent(getApplicationContext(), ListTask.class);
-                        startActivity(intent);
-                        finish();
+                        id.setText("");
+                        password.setText("");
+                        android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(Connexion.this);
+                        adb.setTitle(getResources().getString(R.string.id_incorrect));
+                        adb.setPositiveButton("Ok", null);
+                        adb.show();
                     }
-                }else{
-                    // Si l'utilisateur n'est pas trouvé
-                    // If the user isn't found
-                    Log.e(DEBUGG, "User file "+id.getText()+".json doesn't exist !");
-                    id.setText("");
-                    password.setText("");
-                    android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(Connexion.this);
-                    adb.setTitle(getResources().getString(R.string.id_incorrect));
-                    adb.setPositiveButton("Ok", null);
-                    adb.show();
                 }
             }
         });

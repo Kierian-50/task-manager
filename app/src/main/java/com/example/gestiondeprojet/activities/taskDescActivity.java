@@ -1,4 +1,4 @@
-package com.example.gestiondeprojet;
+package com.example.gestiondeprojet.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.example.gestiondeprojet.R;
+import com.example.gestiondeprojet.Util;
 
 import org.json.JSONArray;
 import org.json.JSONException;

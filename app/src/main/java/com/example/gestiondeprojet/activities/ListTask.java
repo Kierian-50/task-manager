@@ -1,4 +1,4 @@
-package com.example.gestiondeprojet;
+package com.example.gestiondeprojet.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -24,6 +24,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.gestiondeprojet.R;
+import com.example.gestiondeprojet.Util;
 import com.example.gestiondeprojet.adapter.TaskAdapter;
 import com.example.gestiondeprojet.models.Task;
 

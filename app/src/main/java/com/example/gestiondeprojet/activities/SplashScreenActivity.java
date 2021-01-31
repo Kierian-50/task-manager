@@ -1,4 +1,4 @@
-package com.example.gestiondeprojet;
+package com.example.gestiondeprojet.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -10,6 +10,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.widget.TextView;
+
+import com.example.gestiondeprojet.BuildConfig;
+import com.example.gestiondeprojet.R;
 
 import java.util.Locale;
 
@@ -73,7 +76,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         // Displays the version of the app
         // Affiche la version de l'activité
         TextView versionDiplay = findViewById(R.id.version);
-        versionDiplay.setText("Version "+BuildConfig.VERSION_NAME);
+        versionDiplay.setText("Version "+ BuildConfig.VERSION_NAME);
 
         // Redirect to the connection' page after the time of SPLASH_SCREEN_DELAY
         // Redirige vers la page de connexion après le temps de SPLASH_SCREEN_DELAY

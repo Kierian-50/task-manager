@@ -1,4 +1,4 @@
-package com.example.gestiondeprojet;
+package com.example.gestiondeprojet.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,6 +18,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.NumberPicker;
+
+import com.example.gestiondeprojet.R;
+import com.example.gestiondeprojet.Util;
 
 import org.json.JSONArray;
 import org.json.JSONException;

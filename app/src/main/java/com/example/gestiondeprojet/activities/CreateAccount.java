@@ -1,4 +1,4 @@
-package com.example.gestiondeprojet;
+package com.example.gestiondeprojet.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,10 +9,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
+
+import com.example.gestiondeprojet.Constants;
+import com.example.gestiondeprojet.R;
+import com.example.gestiondeprojet.Util;
+import com.example.gestiondeprojet.models.Task;
+import com.example.gestiondeprojet.models.User;
+import com.example.gestiondeprojet.sql.DatabaseHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import static com.example.gestiondeprojet.Constants.JSON_EXTENSION;
 import static com.example.gestiondeprojet.Constants.currentSort;
@@ -61,10 +71,18 @@ public class CreateAccount extends AppCompatActivity {
      */
     private ImageButton backButton;
 
+    /**
+     * The attribute that allows to make the link with the database.
+     * L'attribut qui permet de faire le lien avec la base de données.
+     */
+    private DatabaseHelper databaseHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
+
+        databaseHelper = new DatabaseHelper(this);
 
         // Init attributes
         this.createButton = findViewById(R.id.create_account_button);
@@ -79,20 +97,20 @@ public class CreateAccount extends AppCompatActivity {
         this.createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Check that both password are equals and not empty.
-                // Vérifie que les deux mots de passe sont égaux et qu'ils ne sont pas vides.
-                if(String.valueOf(firstPassword.getText()).equals(String.valueOf(secondPassword.getText())) && !String.valueOf(firstPassword.getText()).equals("")){
-                    // Check that the id is not already used.
-                    // Vérifie que l'identifiant n'est pas déjà utilisé.
-                    if(Util.fileAlreadyExist(id.getText()+ JSON_EXTENSION, context)){
-                        android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(CreateAccount.this);
-                        adb.setTitle(getResources().getString(R.string.id_already_used));
-                        adb.setPositiveButton("Ok", null);
-                        adb.show();
-                        firstPassword.getText().clear();
-                        secondPassword.getText().clear();
-                        id.getText().clear();
-                    }else{
+                // Do the verification with sqlite
+                // Fait la vérification avec SQLite
+
+                // If the chosen id is not already used
+                // Si l'id choisi n'est pas déjà utilisé
+                if(!databaseHelper.checkUser(id.getText().toString())){
+                    // If the passwords are the same
+                    // Si les mots de passe sont identiques
+                    if(String.valueOf(firstPassword.getText()).equals(String.valueOf(secondPassword.getText())) && !String.valueOf(firstPassword.getText()).equals("")){
+
+                        // SQLite Part : Add user
+                        // Ajoute l'utilisateur
+                        databaseHelper.addUser(new User(id.getText().toString(), firstPassword.getText().toString()));
+
                         // Create the user' json and put the user value.
                         // Crée le json de l'utilisateur et mets les valeurs utilisateurs
                         JSONObject info = new JSONObject();
@@ -114,14 +132,24 @@ public class CreateAccount extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
+                    }else{
+                        android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(CreateAccount.this);
+                        adb.setTitle(getResources().getString(R.string.password_not_same));
+                        adb.setPositiveButton("Ok", null);
+                        adb.show();
+                        firstPassword.getText().clear();
+                        secondPassword.getText().clear();
                     }
+
                 }else{
                     android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(CreateAccount.this);
-                    adb.setTitle(getResources().getString(R.string.password_not_same));
+                    adb.setTitle(getResources().getString(R.string.id_already_used));
                     adb.setPositiveButton("Ok", null);
                     adb.show();
                     firstPassword.getText().clear();
                     secondPassword.getText().clear();
+                    id.getText().clear();
                 }
             }
         });

@@ -39,6 +39,12 @@ public class User {
         this.tasks = tasks;
     }
 
+    public User(String name, String password){
+        this.name = name;
+        this.password = password;
+        this.tasks = new ArrayList<>();
+    }
+
     public String getName() {
         return name;
     }

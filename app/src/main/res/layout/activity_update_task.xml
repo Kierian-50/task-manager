@@ -15,7 +15,7 @@
         android:orientation="vertical"
         android:gravity="center"
         android:padding="10dp"
-        tools:context=".UpdateTask">
+        tools:context=".activities.UpdateTask">
 
         <RelativeLayout
             android:layout_width="match_parent"
