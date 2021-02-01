@@ -442,11 +442,13 @@ public class ListTask extends AppCompatActivity {
                     case Configuration.UI_MODE_NIGHT_YES:
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                         saveMode("LIGHT_MODE");
+                        Locale.setDefault(findLanguagePreferences());
                         break;
 
                     case Configuration.UI_MODE_NIGHT_NO:
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                         saveMode("DARK_MODE");
+                        Locale.setDefault(findLanguagePreferences());
                         break;
 
                     case Configuration.UI_MODE_NIGHT_UNDEFINED:
@@ -483,5 +485,24 @@ public class ListTask extends AppCompatActivity {
     private void saveLanguage(String language){
         mEditor.putString(getString(R.string.language), language);
         mEditor.commit();
+    }
+
+    /**
+     * This method allows to find the language in the preferences and return the Locale variable
+     * associated.
+     * Cette methode permet de trouver la langue dans les preferences de l'application et retourne
+     * la constante de la classe Locale associée.
+     * @return The Locale constant that correspond to the language / La constante de la classe
+     *         Locale qui correspond à la langue.
+     */
+    private Locale findLanguagePreferences(){
+        String language = this.mPreferences.getString(getString(R.string.language), "FRANCE");
+        if(language.equals("FRANCE")){
+            return FRANCE;
+        }else if(language.equals("UK")){
+            return UK;
+        }else{
+            return GERMANY;
+        }
     }
 }
