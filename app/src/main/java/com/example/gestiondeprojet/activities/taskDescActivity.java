@@ -24,6 +24,7 @@ import java.util.Date;
 import static com.example.gestiondeprojet.Constants.DOING;
 import static com.example.gestiondeprojet.Constants.JSON_EXTENSION;
 import static com.example.gestiondeprojet.Constants.TODO;
+import static com.example.gestiondeprojet.Constants.URL;
 import static com.example.gestiondeprojet.Constants.currentUsername;
 import static com.example.gestiondeprojet.Util.findPositionWithId;
 
@@ -107,6 +108,18 @@ public class taskDescActivity extends AppCompatActivity {
      */
     private int taskId;
 
+    /**
+     * The component that allows to display the url and on click see the web page.
+     * Le composant qui permet d'afficher l'url et sur un clique de visualiser la page web.
+     */
+    private TextView taskUrl;
+
+    /**
+     * The link to the web site.
+     * Le lien vers le site internet.
+     */
+    private String urlStr;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -164,6 +177,7 @@ public class taskDescActivity extends AppCompatActivity {
         this.taskContext = findViewById(R.id.display_task_context);
         this.taskProjectName = findViewById(R.id.display_task_project);
         this.taskState = findViewById(R.id.display_task_state);
+        this.taskUrl = findViewById(R.id.display_task_url);
 
 
         // Recover the content of the json
@@ -187,6 +201,12 @@ public class taskDescActivity extends AppCompatActivity {
             this.taskContext.setText(getResources().getString(R.string.context)+" : "+currentTask.getString("Context"));
             this.taskState.setText(translateState(currentTask.getString("State")));
             this.taskDuration.setText(getResources().getString(R.string.estimated_duration)+" : "+currentTask.getString("EstimateDuration"));
+            this.urlStr = currentTask.getString(URL);
+            if(!this.urlStr.equals("")){
+                this.taskUrl.setText("\uD83D\uDD17 : "+this.urlStr);
+            }else{
+                this.taskUrl.setText("Pas de lien lié");
+            }
 
             // Display the name of the project if it exists
             // Affiche le nom du projet s'il y en a un
@@ -217,6 +237,28 @@ public class taskDescActivity extends AppCompatActivity {
         } catch (ParseException | JSONException e) {
             e.printStackTrace();
         }
+
+        // If the user click on the link and if there is a link it redirect the user to the web view
+        // activities else display a popup.
+        // Si l'utilisateur clique sur le lien et s'il y a un lien, ça redirige l'utilisateur vers
+        // l'activité de web view.
+        this.taskUrl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(urlStr.equals("")){
+                    android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(taskDescActivity.this);
+                    adb.setTitle(getResources().getString(R.string.empty_link));
+                    adb.setPositiveButton("Ok", null);
+                    adb.show();
+                }else{
+                    Intent intent = new Intent(getApplicationContext(), WebViewActivity.class);
+                    intent.putExtra("taskId", taskId);
+                    intent.putExtra("url", urlStr);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
 
     }
 

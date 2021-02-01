@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static android.content.Context.MODE_PRIVATE;
 import static android.icu.lang.UProperty.NAME;
@@ -282,5 +284,23 @@ public class Util {
             }
         }
         return hm;
+    }
+
+    /**
+     * This method allows to check is the url is correct.
+     * Cette méthode permet de vérifier que l'url est correct.
+     * @param urlStr The url written by the user / L'url écrit par l'utilisateur.
+     * @return True : If the url is correct / Si l'url est correct
+     *         False : If the url is not correct / Si l'url n'est pas correct.
+     */
+    public static boolean isUrl(String urlStr){
+        String regex = "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
+        try {
+            Pattern patt = Pattern.compile(regex);
+            Matcher matcher = patt.matcher(urlStr);
+            return matcher.matches();
+        } catch (RuntimeException e) {
+            return false;
+        }
     }
 }

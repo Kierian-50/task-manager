@@ -4,14 +4,18 @@
 
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
+        android:configChanges="uiMode"
         android:icon="@drawable/logo_project_management"
         android:label="@string/app_name"
         android:roundIcon="@drawable/logo_project_management"
         android:supportsRtl="true"
-        android:theme="@style/Theme.GestionDeProjet">
+        android:theme="@style/Theme.GestionDeProjet"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".activities.WebViewActivity" />
         <activity android:name=".activities.taskDescActivity" />
         <activity android:name=".activities.UpdateTask" />
         <activity android:name=".activities.taskCreateActivity" />

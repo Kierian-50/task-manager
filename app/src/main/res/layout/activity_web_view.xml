@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.WebViewActivity"
+    android:orientation="vertical">
+
+    <Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="60sp"
+        tools:targetApi="lollipop"
+        android:background="@color/moderate_blue">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/web_view_back_to_desc"
+                android:layout_width="50sp"
+                android:layout_height="50sp"
+                android:background="@drawable/back_button"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="5sp"/>
+
+            <TextView
+                android:id="@+id/web_view_url_to_display"
+                android:layout_width="wrap_content"
+                android:layout_height="50sp"
+                android:text="Url"
+                android:layout_centerInParent="true"
+                android:textColor="@color/black"
+                android:layout_marginTop="5sp"
+                android:maxWidth="300sp"
+                android:gravity="center_vertical|center_horizontal"/>
+        </RelativeLayout>
+    </Toolbar>
+
+    <WebView
+        android:id="@+id/web_page_to_display"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

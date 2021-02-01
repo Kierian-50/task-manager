@@ -56,4 +56,14 @@
     <string name="id_incorrect">L\'identifiant n\'est pas dans nos bases de données !</string>
 
     <string name="text_popup">Que voulez vous faire avec la tache ?</string>
+
+    <string name="loading_error">Erreur de chargement !</string>
+    <string name="loading_error_text">Le site que vous tentez de visualiser n\'est pas accessible. Il se peut que le lien soit erroné, ou que votre connexion ou celle de site hébergeant le site ne soit pas fonctionnel.</string>
+    <string name="loading">Chargement…</string>
+
+    <string name="error_url_entered">L\'url n\'est pas conforme !</string>
+    <string name="error_url_entered_text">Vous pouvez laisser le champs vide ou bien le remplir avec un lien conforme</string>
+
+    <string name="empty_link">Il n\'y pas de lien !</string>
+
 </resources>

@@ -144,7 +144,15 @@
         <Spinner
             android:id="@+id/update_spinner_state"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"/>
+
+        <EditText
+            android:id="@+id/update_task_url"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="URL"
+            android:paddingBottom="5dp"/>
 
         <Button
             android:id="@+id/update_task_button"

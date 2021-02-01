@@ -187,7 +187,8 @@ public class TaskAdapter extends BaseAdapter implements Filterable {
                                     tempArray.get(i).getMemonic(), tempArray.get(i).getDescription(),
                                     tempArray.get(i).getEstimateDuration(),
                                     tempArray.get(i).getBeginDate(), tempArray.get(i).getMaxEndDate(),
-                                    tempArray.get(i).getContext(), tempArray.get(i).getProjectName());
+                                    tempArray.get(i).getContext(), tempArray.get(i).getProjectName(),
+                                    tempArray.get(i).getUrl());
                             filters.add(task);
                         }
                     }

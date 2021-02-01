@@ -120,8 +120,15 @@
                 android:id="@+id/display_task_state"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
                 android:textSize="18sp"
                 android:text="@string/task_state"/>
+
+            <TextView
+                android:id="@+id/display_task_url"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blue"/>
 
         </LinearLayout>
     </LinearLayout>

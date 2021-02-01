@@ -56,4 +56,14 @@
     <string name="id_incorrect">The id is not in our database !</string>
 
     <string name="text_popup">What do you want to do with this task ?</string>
+
+    <string name="loading_error">Loading error !</string>
+    <string name="loading_error_text">The web site that you are trying to view is not accessible. It may be the link which is wrong, or your connection or the connection of hosting site which is not functional.</string>
+    <string name="loading">Loading…</string>
+
+    <string name="error_url_entered">The URL is wrong !</string>
+    <string name="error_url_entered_text">You can leave the field blank or fill it in with a correct link.</string>
+
+    <string name="empty_link">There is no link !</string>
+
 </resources>

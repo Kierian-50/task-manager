@@ -50,6 +50,8 @@
     <string name="by_duration">Par durée</string>
     <string name="by_project">Par projet</string>
 
+    <string name="remove_task_text">Suppression de tache</string>
+    <string name="text_remove_explain">Pour supprimer une tâche, il vous suffit de cliquer sur la tâche et dans la page affichant les attributs de la tâche, il faut cliquer sur la corbeille ou vous pouvez rester appuyer sur une tâche pendant une seconde et une fenêtre va vous inviter à supprimer la tâche</string>
     <string name="text_on_long_item_click">Que voulez vous faire avec la tache ?</string>
 
     <string name="choose_language">Choose Language…</string>
@@ -61,5 +63,14 @@
     <string name="password_incorrect">Le mot de passe n\'est pas correct !</string>
     <string name="id_incorrect">L\'identifiant n\'est pas dans nos bases de données !</string>
     <string name="text_popup">Que voulez vous faire avec la tache ?</string>
+
+    <string name="loading_error">Erreur de chargement !</string>
+    <string name="loading_error_text">"Le site que vous tentez de visualiser n'est pas accésible. Il se peut que le lien soit erroné, ou que votre connexion ou celle de site hébergeant le site ne soit pas fonctionnel.</string>
+    <string name="loading">Chargement…</string>
+
+    <string name="error_url_entered">L\'url n\'est pas conforme !</string>
+    <string name="error_url_entered_text">Vous pouvez laisser le champs vide ou bien le remplir avec un lien conforme</string>
+
+    <string name="empty_link">Il n\'y pas de lien !</string>
 
 </resources>

@@ -72,6 +72,12 @@ public class Task {
     private String projectName;
 
     /**
+     * An url link to the task.
+     * Une url liée à une tâche.
+     */
+    private String url;
+
+    /**
      * The constructor of the task object / Le constructeur de l'objet task
      * @param id The id of the task
      * @param name The name of the task
@@ -82,8 +88,9 @@ public class Task {
      * @param maxEndDate The max end date of the task.
      * @param context The context of the task.
      * @param projectName The name of the project which is link to the task.
+     * @param url An url link to the task / Une url liée à la tâche.
      */
-    public Task(int id, String name, String memonic, String description, String duration, String beginDate, String maxEndDate, String context, String projectName) {
+    public Task(int id, String name, String memonic, String description, String duration, String beginDate, String maxEndDate, String context, String projectName, String url) {
         this.name = name;
         this.description = description;
         this.memonic = memonic;
@@ -95,6 +102,15 @@ public class Task {
         this.stateTask.changeState(memonic);
         this.context = context;
         this.projectName = projectName;
+        this.url = url;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getName() {

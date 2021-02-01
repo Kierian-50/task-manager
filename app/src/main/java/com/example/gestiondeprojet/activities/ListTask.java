@@ -49,6 +49,7 @@ import static com.example.gestiondeprojet.Constants.NAME;
 import static com.example.gestiondeprojet.Constants.PROJECT;
 import static com.example.gestiondeprojet.Constants.STATE;
 import static com.example.gestiondeprojet.Constants.TASK;
+import static com.example.gestiondeprojet.Constants.URL;
 import static com.example.gestiondeprojet.Constants.availableLanguege;
 import static com.example.gestiondeprojet.Constants.currentSort;
 import static com.example.gestiondeprojet.Constants.currentUsername;
@@ -194,7 +195,8 @@ public class ListTask extends AppCompatActivity {
                         taskObject.getString(BEGIN_DATE),
                         taskObject.getString(MAX_END_DATE),
                         taskObject.getString(CONTEXT),
-                        taskObject.getString(PROJECT)));
+                        taskObject.getString(PROJECT),
+                        taskObject.getString(URL)));
             }
 
         } catch (JSONException e) {

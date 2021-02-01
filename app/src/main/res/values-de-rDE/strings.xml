@@ -60,4 +60,14 @@
     <string name="id_incorrect">Das Login ist nicht in unseren Datenbanken!</string>
 
     <string name="text_popup">Was wollen Sie mit dem Aufgabe machen?</string>
+
+    <string name="loading_error">Ladefehler !</string>
+    <string name="loading_error_text">Die Seite, die Sie aufrufen möchten, ist nicht zugänglich. Es kann sein, dass der Link falsch ist, oder dass Ihre Verbindung oder die die Seite hostet, nicht funktioniert.</string>
+    <string name="loading">Laden…</string>
+
+    <string name="error_url_entered">Die URL ist falsch !</string>
+    <string name="error_url_entered_text">Sie können das Textfeld leer lassen oder es mit einem korrekten Link ausfüllen.</string>
+
+    <string name="empty_link">Es gibt keine Verbindung !</string>
+
 </resources>

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -49,6 +50,7 @@ import static com.example.gestiondeprojet.Constants.PROJECT;
 import static com.example.gestiondeprojet.Constants.STATE;
 import static com.example.gestiondeprojet.Constants.TASK;
 import static com.example.gestiondeprojet.Constants.TODO;
+import static com.example.gestiondeprojet.Constants.URL;
 import static com.example.gestiondeprojet.Constants.currentUsername;
 import static com.example.gestiondeprojet.Util.findPositionWithId;
 
@@ -173,6 +175,12 @@ public class UpdateTask extends AppCompatActivity {
      */
     private int taskIdToDisplay;
 
+    /**
+     * The component which allows to enter an URL.
+     * Le composant qui permet d'écrire l'url lié à une tâche
+     */
+    private EditText taskUrl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -193,6 +201,7 @@ public class UpdateTask extends AppCompatActivity {
         this.project = findViewById(R.id.update_task_project);
         this.updateTask = findViewById(R.id.update_task_button);
         this.backButton = findViewById(R.id.update_back_button);
+        this.taskUrl = findViewById(R.id.update_task_url);
         this.context = this;
 
         // Put the possible values of the NumberPicker
@@ -305,6 +314,7 @@ public class UpdateTask extends AppCompatActivity {
             this.taskBeginDate.setText(currentTask.getString(BEGIN_DATE));
             this.taskEndDate.setText(currentTask.getString(MAX_END_DATE));
             this.taskContext.setText(currentTask.getString(CONTEXT));
+            this.taskUrl.setText(currentTask.getString(URL));
 
             String duration = currentTask.getString(ESTIMATE_DURATION);
             String[] values = duration.split("h");
@@ -350,35 +360,55 @@ public class UpdateTask extends AppCompatActivity {
                         !String.valueOf(taskBeginDate.getText()).equals("") &&
                         !String.valueOf(taskEndDate.getText()).equals("") &&
                         !errorDate){
-                    try {
-                        // Create the task
-                        taskArray.remove(findPositionWithId(taskIdToDisplay, context)); // Supprime la tache du json avant de la réécrire
-                        currentTask.put(ID, taskId);
-                        currentTask.put(NAME, taskName.getText().toString());
-                        currentTask.put(STATE, findStateInSpinner(stateSpinner.getSelectedItem().toString()));
-                        currentTask.put(DESCRIPTION, taskDesc.getText().toString());
-                        currentTask.put(ESTIMATE_DURATION, nbPickerHour.getValue()+"h"+nbPickerMinutes.getValue()+"m");
-                        currentTask.put(BEGIN_DATE, taskBeginDate.getText().toString());
-                        currentTask.put(MAX_END_DATE, taskEndDate.getText().toString());
-                        currentTask.put(CONTEXT, taskContext.getText().toString());
-                        currentTask.put(PROJECT, project.getText().toString());
-                        // The json file
-                        JSONObject json = Util.readJsonFile(currentUsername+ JSON_EXTENSION, context);
 
-                        // The task list
-                        taskArray.put(currentTask); // Add the task
-                        json.put(TASK, taskArray);
+                    // Check that the url entered by the user is correct or is empty
+                    // Vérifie que l'url entré par l'utilisateur est correcte ou est vide.
+                    if(Util.isUrl(taskUrl.getText().toString()) || taskUrl.getText().toString().equals("")){
+                        try {
+                            // Create the task
+                            taskArray.remove(findPositionWithId(taskIdToDisplay, context)); // Supprime la tache du json avant de la réécrire
+                            currentTask.put(ID, taskId);
+                            currentTask.put(NAME, taskName.getText().toString());
+                            currentTask.put(STATE, findStateInSpinner(stateSpinner.getSelectedItem().toString()));
+                            currentTask.put(DESCRIPTION, taskDesc.getText().toString());
+                            currentTask.put(ESTIMATE_DURATION, nbPickerHour.getValue()+"h"+nbPickerMinutes.getValue()+"m");
+                            currentTask.put(BEGIN_DATE, taskBeginDate.getText().toString());
+                            currentTask.put(MAX_END_DATE, taskEndDate.getText().toString());
+                            currentTask.put(CONTEXT, taskContext.getText().toString());
+                            currentTask.put(PROJECT, project.getText().toString());
+                            currentTask.put(URL, taskUrl.getText().toString());
+                            // The json file
+                            JSONObject json = Util.readJsonFile(currentUsername+ JSON_EXTENSION, context);
 
-                        Util.writeJsonFile(currentUsername+ JSON_EXTENSION, json, context);
+                            // The task list
+                            taskArray.put(currentTask); // Add the task
+                            json.put(TASK, taskArray);
 
-                        // Return to the list
-                        Intent intent = new Intent(getApplicationContext(), ListTask.class);
-                        startActivity(intent);
-                        finish();
+                            Util.writeJsonFile(currentUsername+ JSON_EXTENSION, json, context);
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                            // Return to the list
+                            Intent intent = new Intent(getApplicationContext(), ListTask.class);
+                            startActivity(intent);
+                            finish();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }else{
+                        // Display an error message because the url is wrong
+                        // Affiche un message d'error car l'url est mauvais
+                        android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(UpdateTask.this);
+                        adb.setTitle(getResources().getString(R.string.error_url_entered));
+                        adb.setMessage(getResources().getString(R.string.error_url_entered_text));
+                        adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                taskUrl.getText().clear();
+                            }
+                        });
+                        adb.show();
                     }
+
                 }else if(errorDate) {
                     // Display a popup which says that the begin date is after the end date.
                     // Affiche une popup qui prévient que la date de début est après la date de fin.

@@ -141,6 +141,13 @@
             android:completionThreshold="1"
             android:paddingBottom="5dp"/>
 
+
+        <EditText
+            android:id="@+id/create_task_url"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="URL"/>
+
         <Button
             android:id="@+id/create_task_button"
             android:layout_width="wrap_content"

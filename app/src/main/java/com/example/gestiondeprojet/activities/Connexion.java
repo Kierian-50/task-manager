@@ -20,17 +20,11 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.gestiondeprojet.R;
-import com.example.gestiondeprojet.Util;
 import com.example.gestiondeprojet.sql.DatabaseHelper;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Locale;
 
 import static com.example.gestiondeprojet.Constants.DEBUGG;
-import static com.example.gestiondeprojet.Constants.JSON_EXTENSION;
-import static com.example.gestiondeprojet.Constants.PASSWORD;
 import static com.example.gestiondeprojet.Constants.availableLanguege;
 import static com.example.gestiondeprojet.Constants.currentSort;
 import static com.example.gestiondeprojet.Constants.currentUsername;
@@ -228,12 +222,16 @@ public class Connexion extends AppCompatActivity {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                         saveMode("LIGHT_MODE");
                         Locale.setDefault(findLanguagePreferences());
+                        Configuration config = new Configuration();
+                        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
                         break;
 
                     case Configuration.UI_MODE_NIGHT_NO:
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                         saveMode("DARK_MODE");
                         Locale.setDefault(findLanguagePreferences());
+                        Configuration config1 = new Configuration();
+                        getBaseContext().getResources().updateConfiguration(config1, getBaseContext().getResources().getDisplayMetrics());
                         break;
 
                     case Configuration.UI_MODE_NIGHT_UNDEFINED:
@@ -332,6 +330,27 @@ public class Connexion extends AppCompatActivity {
             return UK;
         }else{
             return GERMANY;
+        }
+    }
+
+    /**
+     * This method allows to find the language in the preferences and return the string variable
+     * associated.
+     * Cette methode permet de trouver la langue dans les preferences de l'application et retourne
+     * le string associé associée.
+     * @return The string that correspond to the language / La string qui correspond à la langue.
+     */
+    private String findLanguagePreferencesStr(){
+        String language = this.mPreferences.getString(getString(R.string.language), "FRANCE");
+        if(language.equals("FRANCE")){
+            Log.e(DEBUGG, FRANCE.toString());
+            return FRANCE.toString();
+        }else if(language.equals("UK")){
+            Log.e(DEBUGG, UK.toString());
+            return UK.toString();
+        }else{
+            Log.e(DEBUGG, GERMANY.toString());
+            return GERMANY.toString();
         }
     }
 }
