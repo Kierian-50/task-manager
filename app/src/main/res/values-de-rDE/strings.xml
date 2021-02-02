@@ -69,5 +69,6 @@
     <string name="error_url_entered_text">Sie können das Textfeld leer lassen oder es mit einem korrekten Link ausfüllen.</string>
 
     <string name="empty_link">Es gibt keine Verbindung !</string>
+    <string name="url">URL</string>
 
 </resources>

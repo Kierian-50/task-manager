@@ -155,7 +155,9 @@ public class TaskAdapter extends BaseAdapter implements Filterable {
      */
     private String oneLineDescription(String completeDesc){
         int nbChar = completeDesc.length();
-        if(nbChar < NB_MAX_LETTER_IN_DESC){
+        if(completeDesc.contains("\n") && completeDesc.substring(0, completeDesc.indexOf("\n")).length() < NB_MAX_LETTER_IN_DESC){
+            return completeDesc.substring(0, completeDesc.indexOf("\n"))+"...";
+        }else if(nbChar < NB_MAX_LETTER_IN_DESC){
             return completeDesc;
         }else{
             return completeDesc.substring(0, NB_MAX_LETTER_IN_DESC -4)+"...";

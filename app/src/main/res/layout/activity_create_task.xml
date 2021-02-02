@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintBottom_toBottomOf="parent">
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:gravity="center"
+        android:orientation="vertical"
         android:padding="10dp"
         tools:context=".activities.taskCreateActivity">
 
@@ -27,67 +27,72 @@
                 android:id="@+id/create_back_button"
                 android:layout_width="50sp"
                 android:layout_height="50sp"
-                android:background="@drawable/back_button"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="45sp"/>
+                android:layout_marginTop="45sp"
+                android:background="@drawable/back_button" />
 
             <ImageView
                 android:id="@+id/logo_project_management_corp"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp"
                 android:layout_centerInParent="true"
-                android:src="@drawable/logo_project_management"
-                android:contentDescription="@string/desc_logo" />
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:contentDescription="@string/desc_logo"
+                android:src="@drawable/logo_project_management" />
 
             <ImageButton
                 android:layout_width="0sp"
                 android:layout_height="0sp"
                 android:layout_alignParentEnd="true"
-                android:visibility="invisible"
-                android:clickable="false"/>
+                android:clickable="false"
+                android:visibility="invisible" />
 
         </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:paddingBottom="10dp"
             android:text="@string/create_task_text"
-            android:paddingBottom="10dp"/>
+            android:textSize="25sp" />
 
         <EditText
             android:id="@+id/task_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textVisiblePassword"
             android:hint="@string/name_task"
-            android:paddingBottom="5dp"/>
+            android:inputType="text"
+            android:maxLines="1"
+            android:lines="1"
+            android:singleLine="true"
+            android:paddingBottom="5dp" />
 
         <EditText
             android:id="@+id/task_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/description"
-            android:paddingBottom="5dp"/>
+            android:inputType="textMultiLine|text"
+            android:paddingBottom="5dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingBottom="5dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/hours"
-                android:layout_marginHorizontal="20dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/minutes"
-                android:layout_marginHorizontal="17.5dp"/>
+                android:layout_marginHorizontal="20dp"
+                android:text="@string/hours" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="17.5dp"
+                android:text="@string/minutes" />
         </LinearLayout>
 
         <LinearLayout
@@ -95,16 +100,18 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingBottom="5dp">
+
             <NumberPicker
                 android:id="@+id/task_duration_hour"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"/>
+                android:layout_marginEnd="10dp" />
+
             <NumberPicker
                 android:id="@+id/task_duration_minutes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"/>
+                android:layout_marginStart="10dp" />
         </LinearLayout>
 
 
@@ -114,7 +121,7 @@
             android:layout_height="wrap_content"
             android:focusableInTouchMode="false"
             android:hint="@string/begin_date"
-            android:paddingBottom="5dp"/>
+            android:paddingBottom="5dp" />
 
         <EditText
             android:id="@+id/task_end_date"
@@ -122,37 +129,46 @@
             android:layout_height="wrap_content"
             android:focusableInTouchMode="false"
             android:hint="@string/end_date"
-            android:paddingBottom="5dp"/>
+            android:paddingBottom="5dp" />
 
         <EditText
             android:id="@+id/task_context"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textVisiblePassword"
             android:hint="@string/context"
-            android:paddingBottom="5dp"/>
+            android:inputType="text"
+            android:paddingBottom="5dp"
+            android:maxLines="1"
+            android:lines="1"
+            android:singleLine="true"/>
 
         <AutoCompleteTextView
             android:id="@+id/task_project"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textVisiblePassword"
-            android:hint="@string/project_name"
             android:completionThreshold="1"
-            android:paddingBottom="5dp"/>
+            android:hint="@string/project_name"
+            android:inputType="text"
+            android:paddingBottom="5dp"
+            android:maxLines="1"
+            android:lines="1"
+            android:singleLine="true"/>
 
 
         <EditText
             android:id="@+id/create_task_url"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="URL"/>
+            android:maxLines="1"
+            android:lines="1"
+            android:singleLine="true"
+            android:hint="@string/url" />
 
         <Button
             android:id="@+id/create_task_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/save"/>
+            android:text="@string/save" />
 
     </LinearLayout>
 

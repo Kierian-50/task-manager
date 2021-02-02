@@ -65,5 +65,6 @@
     <string name="error_url_entered_text">You can leave the field blank or fill it in with a correct link.</string>
 
     <string name="empty_link">There is no link !</string>
+    <string name="url">URL</string>
 
 </resources>

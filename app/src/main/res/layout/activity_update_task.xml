@@ -62,7 +62,10 @@
             android:id="@+id/update_task_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textVisiblePassword"
+            android:inputType="text"
+            android:maxLines="1"
+            android:lines="1"
+            android:singleLine="true"
             android:hint="@string/name_task"
             android:paddingBottom="5dp"/>
 
@@ -70,6 +73,7 @@
             android:id="@+id/update_task_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textMultiLine|text"
             android:hint="@string/description"
             android:paddingBottom="5dp"/>
 
@@ -126,20 +130,26 @@
 
         <EditText
             android:id="@+id/update_task_context"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textVisiblePassword"
+            android:inputType="text"
             android:hint="@string/context"
-            android:paddingBottom="5dp"/>
+            android:paddingBottom="5dp"
+            android:maxLines="1"
+            android:lines="1"
+            android:singleLine="true"/>
 
         <AutoCompleteTextView
             android:id="@+id/update_task_project"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/project_name"
             android:completionThreshold="1"
-            android:inputType="textVisiblePassword"
-            android:paddingBottom="5dp"/>
+            android:inputType="text"
+            android:paddingBottom="5dp"
+            android:maxLines="1"
+            android:lines="1"
+            android:singleLine="true"/>
 
         <Spinner
             android:id="@+id/update_spinner_state"
@@ -151,8 +161,11 @@
             android:id="@+id/update_task_url"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="URL"
-            android:paddingBottom="5dp"/>
+            android:hint="@string/url"
+            android:paddingBottom="5dp"
+            android:maxLines="1"
+            android:lines="1"
+            android:singleLine="true"/>
 
         <Button
             android:id="@+id/update_task_button"

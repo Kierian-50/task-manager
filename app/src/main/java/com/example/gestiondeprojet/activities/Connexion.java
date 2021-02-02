@@ -32,6 +32,8 @@ import static java.util.Locale.FRANCE;
 import static java.util.Locale.GERMANY;
 import static java.util.Locale.UK;
 
+// TODO affichage des liens possible + bug mode sombre + cahier des charges
+
 /**
  * This class allows to make all the logic behind the connection' activity
  * Cette classe permet de mettre en place toute la logique derrière l'activité de connexion.
