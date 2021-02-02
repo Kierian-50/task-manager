@@ -50,7 +50,7 @@ import static com.example.gestiondeprojet.Constants.PROJECT;
 import static com.example.gestiondeprojet.Constants.STATE;
 import static com.example.gestiondeprojet.Constants.TASK;
 import static com.example.gestiondeprojet.Constants.URL;
-import static com.example.gestiondeprojet.Constants.availableLanguege;
+import static com.example.gestiondeprojet.Constants.AVAILABLE_LANGUAGE;
 import static com.example.gestiondeprojet.Constants.currentSort;
 import static com.example.gestiondeprojet.Constants.currentUsername;
 import static com.example.gestiondeprojet.Util.findPositionWithId;
@@ -403,7 +403,7 @@ public class ListTask extends AppCompatActivity {
             public void onClick(View v) {
                 androidx.appcompat.app.AlertDialog.Builder mBuilder = new androidx.appcompat.app.AlertDialog.Builder(ListTask.this);
                 mBuilder.setTitle(getResources().getString(R.string.choose_language));
-                mBuilder.setSingleChoiceItems(availableLanguege, -1, new DialogInterface.OnClickListener() {
+                mBuilder.setSingleChoiceItems(AVAILABLE_LANGUAGE, -1, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if(which==0){
@@ -445,12 +445,16 @@ public class ListTask extends AppCompatActivity {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                         saveMode("LIGHT_MODE");
                         Locale.setDefault(findLanguagePreferences());
+                        Configuration config = new Configuration();
+                        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
                         break;
 
                     case Configuration.UI_MODE_NIGHT_NO:
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                         saveMode("DARK_MODE");
                         Locale.setDefault(findLanguagePreferences());
+                        Configuration config1 = new Configuration();
+                        getBaseContext().getResources().updateConfiguration(config1, getBaseContext().getResources().getDisplayMetrics());
                         break;
 
                     case Configuration.UI_MODE_NIGHT_UNDEFINED:

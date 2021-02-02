@@ -39,6 +39,11 @@ public class User {
         this.tasks = tasks;
     }
 
+    /**
+     * Init attributes.
+     * @param name The name of the user.
+     * @param password The password of the user.
+     */
     public User(String name, String password){
         this.name = name;
         this.password = password;

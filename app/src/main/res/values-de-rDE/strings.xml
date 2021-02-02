@@ -71,4 +71,5 @@
     <string name="empty_link">Es gibt keine Verbindung !</string>
     <string name="url">URL</string>
 
+    <string name="no_link">Kein Link zugeordnet</string>
 </resources>

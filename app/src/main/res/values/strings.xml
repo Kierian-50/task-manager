@@ -74,4 +74,6 @@
     <string name="empty_link">Il n\'y pas de lien !</string>
     <string name="url">URL</string>
 
+    <string name="no_link">Auncun lien lié</string>
+
 </resources>

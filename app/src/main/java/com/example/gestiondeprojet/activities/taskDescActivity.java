@@ -21,8 +21,17 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static com.example.gestiondeprojet.Constants.BEGIN_DATE;
+import static com.example.gestiondeprojet.Constants.CONTEXT;
+import static com.example.gestiondeprojet.Constants.DESCRIPTION;
 import static com.example.gestiondeprojet.Constants.DOING;
+import static com.example.gestiondeprojet.Constants.ESTIMATE_DURATION;
 import static com.example.gestiondeprojet.Constants.JSON_EXTENSION;
+import static com.example.gestiondeprojet.Constants.MAX_END_DATE;
+import static com.example.gestiondeprojet.Constants.NAME;
+import static com.example.gestiondeprojet.Constants.PROJECT;
+import static com.example.gestiondeprojet.Constants.STATE;
+import static com.example.gestiondeprojet.Constants.TASK;
 import static com.example.gestiondeprojet.Constants.TODO;
 import static com.example.gestiondeprojet.Constants.URL;
 import static com.example.gestiondeprojet.Constants.currentUsername;
@@ -188,32 +197,32 @@ public class taskDescActivity extends AppCompatActivity {
         JSONObject currentTask = null;
         try {
             // Find the tasks / Trouve les tâches
-            taskArray = json.getJSONArray("Task");
+            taskArray = json.getJSONArray(TASK);
             // Find the task that the user wants to display
             // Trouve la tâche que l'utilisateur veux voir
             currentTask = taskArray.getJSONObject(findPositionWithId(this.taskId, this));
 
             // Display the values of the task in the components
             // Affiche les valeurs de la tâche dans les composants
-            this.taskName.setText(currentTask.getString("Name"));
-            this.taskDesc.setText(getResources().getString(R.string.description)+" : "+currentTask.getString("Description"));
-            this.taskDate.setText("🕒 : "+currentTask.getString("BeginDate") +"=>"+currentTask.getString("MaxEndDate"));
-            this.taskContext.setText(getResources().getString(R.string.context)+" : "+currentTask.getString("Context"));
-            this.taskState.setText(translateState(currentTask.getString("State")));
-            this.taskDuration.setText(getResources().getString(R.string.estimated_duration)+" : "+currentTask.getString("EstimateDuration"));
+            this.taskName.setText(currentTask.getString(NAME));
+            this.taskDesc.setText(getResources().getString(R.string.description)+" : "+currentTask.getString(DESCRIPTION));
+            this.taskDate.setText("🕒 : "+currentTask.getString(BEGIN_DATE) +"=>"+currentTask.getString(MAX_END_DATE));
+            this.taskContext.setText(getResources().getString(R.string.context)+" : "+currentTask.getString(CONTEXT));
+            this.taskState.setText(translateState(currentTask.getString(STATE)));
+            this.taskDuration.setText(getResources().getString(R.string.estimated_duration)+" : "+currentTask.getString(ESTIMATE_DURATION));
             this.urlStr = currentTask.getString(URL);
             if(!this.urlStr.equals("")){
                 this.taskUrl.setText("\uD83D\uDD17 : "+this.urlStr);
             }else{
-                this.taskUrl.setText("Pas de lien lié");
+                this.taskUrl.setText(getResources().getString(R.string.no_link));
             }
 
             // Display the name of the project if it exists
             // Affiche le nom du projet s'il y en a un
-            if(currentTask.getString("Project").toString().equals("")){
+            if(currentTask.getString(PROJECT).toString().equals("")){
                 this.taskProjectName.setText(getResources().getString(R.string.no_project_found));
             }else{
-                this.taskProjectName.setText(getResources().getString(R.string.project_found)+" : "+currentTask.getString("Project"));
+                this.taskProjectName.setText(getResources().getString(R.string.project_found)+" : "+currentTask.getString(PROJECT));
             }
 
         } catch (JSONException e) {
@@ -228,7 +237,7 @@ public class taskDescActivity extends AppCompatActivity {
         // Change the color of the date in red if the date is past and green else
         // Change la couleur de la date en rouge si la date est passé et en vert sinon
         try {
-            Date endDate = newFormat.parse(currentTask.getString("MaxEndDate"));
+            Date endDate = newFormat.parse(currentTask.getString(MAX_END_DATE));
             if(currentDate.after(endDate)) { // Change la couleur de la date si la date de fin de tache est passé
                 taskDate.setTextColor(0xffff0000);
             }else{

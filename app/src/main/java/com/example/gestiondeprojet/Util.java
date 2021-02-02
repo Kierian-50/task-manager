@@ -24,8 +24,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static android.content.Context.MODE_PRIVATE;
-import static android.icu.lang.UProperty.NAME;
-import static android.net.wifi.rtt.CivicLocationKeys.STATE;
 import static com.example.gestiondeprojet.Constants.DEBUGG;
 import static com.example.gestiondeprojet.Constants.ID;
 import static com.example.gestiondeprojet.Constants.JSON_EXTENSION;
@@ -120,29 +118,6 @@ public class Util {
     public static boolean fileAlreadyExist(String fileName, Context context){
         File file = new File(context.getFilesDir() + "/"+fileName);
         return file.exists();
-    }
-
-    public static void updateTasksInJson(String fileName, ArrayList<Task> tasks, Context context){
-        JSONArray array = new JSONArray();
-        try{
-            for(Task task : tasks){
-                array.put(NAME, task.getName());
-                array.put(STATE, task.getStateTask().getStatue());
-            }
-
-            // The json file
-            JSONObject json = Util.readJsonFile(fileName, context); // Recupère le json de l'utilisateur
-
-            // The task list
-            JSONArray taskList = json.getJSONArray("Task"); // Recupère ses taches
-            //taskList.put(task); // Add the task
-            json.put(TASK, taskList);
-
-            Util.writeJsonFile(currentUsername+ JSON_EXTENSION, json, context);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 
     /**

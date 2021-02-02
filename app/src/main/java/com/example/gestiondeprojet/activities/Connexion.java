@@ -25,14 +25,12 @@ import com.example.gestiondeprojet.sql.DatabaseHelper;
 import java.util.Locale;
 
 import static com.example.gestiondeprojet.Constants.DEBUGG;
-import static com.example.gestiondeprojet.Constants.availableLanguege;
+import static com.example.gestiondeprojet.Constants.AVAILABLE_LANGUAGE;
 import static com.example.gestiondeprojet.Constants.currentSort;
 import static com.example.gestiondeprojet.Constants.currentUsername;
 import static java.util.Locale.FRANCE;
 import static java.util.Locale.GERMANY;
 import static java.util.Locale.UK;
-
-// TODO affichage des liens possible + bug mode sombre + cahier des charges
 
 /**
  * This class allows to make all the logic behind the connection' activity
@@ -123,7 +121,7 @@ public class Connexion extends AppCompatActivity {
         this.colorMode = findViewById(R.id.connection_brightness_mode);
         this.rememberMeCheckBox = findViewById(R.id.remember_me);
         this.context = this;
-        this.mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        this.mPreferences = PreferenceManager.getDefaultSharedPreferences(this); // MODE_PRIVATE : YES
         this.mEditor = mPreferences.edit();
 
         // Configure the text edit according to the preferences
@@ -182,7 +180,7 @@ public class Connexion extends AppCompatActivity {
             public void onClick(View v) {
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(Connexion.this);
                 mBuilder.setTitle(getResources().getString(R.string.choose_language));
-                mBuilder.setSingleChoiceItems(availableLanguege, -1, new DialogInterface.OnClickListener() {
+                mBuilder.setSingleChoiceItems(AVAILABLE_LANGUAGE, -1, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if(which==0){

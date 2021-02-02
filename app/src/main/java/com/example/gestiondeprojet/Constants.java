@@ -21,7 +21,7 @@ public final class Constants {
     public static final String CONTEXT = "Context";
     public static final String PROJECT = "Project";
     public static final String URL = "Url";
-    public static final String[] availableLanguege = {"Français", "English", "Deutsch"};
+    public static final String[] AVAILABLE_LANGUAGE = {"Français", "English", "Deutsch"};
 
     public static int currentSort; // Allow to have the current sort chosen by the user
     public static String currentUsername;
