@@ -3,6 +3,7 @@ package com.example.gestiondeprojet;
 public final class Constants {
 
     public static final int SPLASH_SCREEN_DELAY = 3000;
+    public static final int LIST_TASK_DELAY = 1000;
     public static final String DEBUGG = "DEBUGG";
     public static final String ID = "id";
     public static final String PASSWORD = "Password";

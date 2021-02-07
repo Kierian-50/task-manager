@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +46,7 @@ import static com.example.gestiondeprojet.Constants.DESCRIPTION;
 import static com.example.gestiondeprojet.Constants.ESTIMATE_DURATION;
 import static com.example.gestiondeprojet.Constants.ID;
 import static com.example.gestiondeprojet.Constants.JSON_EXTENSION;
+import static com.example.gestiondeprojet.Constants.LIST_TASK_DELAY;
 import static com.example.gestiondeprojet.Constants.MAX_END_DATE;
 import static com.example.gestiondeprojet.Constants.NAME;
 import static com.example.gestiondeprojet.Constants.PROJECT;
@@ -142,6 +145,18 @@ public class ListTask extends AppCompatActivity {
      */
     private SharedPreferences.Editor mEditor;
 
+    /**
+     * This attribute allows to display a progress bar the time of the loading of the tasks.
+     * This allows to don't display the tasks appear and to avoid that the user see the sort at the
+     * launch of this activity because this is not pretty and the user can think there is a problem
+     * with the app.
+     * Cette attribute permet d'afficher une bar de chargment le temps du chargement des tâches à
+     * afficher et trier. Ca permet de ne pas afficher les tâches apparaitre et d'éviter que
+     * l'utilisateur puisse voir les tâches se ranger car ce n'est pas très jolie et l'utilisateur
+     * peut imaginer qu'il y a un problème avec l'application.
+     */
+    private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -158,6 +173,7 @@ public class ListTask extends AppCompatActivity {
         this.buttonMode = findViewById(R.id.listTask_brightness);
         this.mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         this.mEditor = mPreferences.edit();
+        this.progressBar = findViewById(R.id.list_task_progress_bar);
 
         final ArrayList<String> possibleSort = new ArrayList<>(Arrays.asList(
                 getResources().getString(R.string.by_state),
@@ -469,6 +485,19 @@ public class ListTask extends AppCompatActivity {
                 finish();
             }
         });
+
+        // This allows to display a progress bar the time to find the tasks and to sort the tasks
+        // Ca permet d'afficher une bar de chargement le temps de trouver les taches à afficher
+        // et de les trier.
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Remove the progress bar and display the list
+                // Retire la bar de chargement et affiche la list
+                progressBar.setVisibility(View.INVISIBLE);
+                listView.setVisibility(View.VISIBLE);
+            }
+        }, LIST_TASK_DELAY);
     }
 
     /**
