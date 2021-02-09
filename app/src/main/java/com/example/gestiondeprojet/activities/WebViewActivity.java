@@ -95,7 +95,7 @@ public class WebViewActivity extends AppCompatActivity {
         this.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), taskDescActivity.class);
+                Intent intent = new Intent(getApplicationContext(), TaskDescActivity.class);
                 intent.putExtra("taskId", taskId);
                 startActivity(intent);
                 finish();
@@ -128,7 +128,7 @@ public class WebViewActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         // At the click go to the previous activity.
                         // Au clique retourne à la page précedente.
-                        Intent intent = new Intent(getApplicationContext(), taskDescActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), TaskDescActivity.class);
                         intent.putExtra("taskId", taskId);
                         startActivity(intent);
                         finish();
@@ -174,7 +174,7 @@ public class WebViewActivity extends AppCompatActivity {
      */
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(getApplicationContext(), taskDescActivity.class);
+        Intent intent = new Intent(getApplicationContext(), TaskDescActivity.class);
         intent.putExtra("taskId", taskId);
         startActivity(intent);
         finish();

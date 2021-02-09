@@ -66,7 +66,7 @@
             android:orientation="vertical"
             android:gravity="center"
             android:padding="10dp"
-            tools:context=".activities.UpdateTask">
+            tools:context=".activities.UpdateTaskActivity">
 
             <TextView
                 android:id="@+id/display_task_name"

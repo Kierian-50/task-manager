@@ -43,7 +43,7 @@ import static com.example.gestiondeprojet.Util.findPositionWithId;
  * Cette classe est lié à l'activité d'affichage des valeurs de la tâche et gère la logique
  * derrière.
  */
-public class taskDescActivity extends AppCompatActivity {
+public class TaskDescActivity extends AppCompatActivity {
 
     /**
      * The component where the user can go back on the list task activity.
@@ -132,7 +132,7 @@ public class taskDescActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_display_a_task);
+        setContentView(R.layout.activity_task_desc_activity);
 
         Bundle bundle = getIntent().getExtras();
         this.taskId = bundle.getInt("taskId", 0);
@@ -148,7 +148,7 @@ public class taskDescActivity extends AppCompatActivity {
         this.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ListTask.class);
+                Intent intent = new Intent(getApplicationContext(), ListTaskActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -159,7 +159,7 @@ public class taskDescActivity extends AppCompatActivity {
         this.updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), UpdateTask.class);
+                Intent intent = new Intent(getApplicationContext(), UpdateTaskActivity.class);
                 intent.putExtra("taskId", taskId);
                 startActivity(intent);
                 finish();
@@ -172,7 +172,7 @@ public class taskDescActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Util.removeTask(currentUsername+JSON_EXTENSION, findPositionWithId(taskId, context), context);
-                Intent intent = new Intent(getApplicationContext(), ListTask.class);
+                Intent intent = new Intent(getApplicationContext(), ListTaskActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -255,7 +255,7 @@ public class taskDescActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(urlStr.equals("")){
-                    android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(taskDescActivity.this);
+                    android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(TaskDescActivity.this);
                     adb.setTitle(getResources().getString(R.string.empty_link));
                     adb.setPositiveButton("Ok", null);
                     adb.show();
@@ -277,7 +277,7 @@ public class taskDescActivity extends AppCompatActivity {
      */
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(getApplicationContext(), ListTask.class);
+        Intent intent = new Intent(getApplicationContext(), ListTaskActivity.class);
         startActivity(intent);
         finish();
     }

@@ -19,6 +19,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.NumberPicker;
+import android.widget.Spinner;
 
 import com.example.gestiondeprojet.R;
 import com.example.gestiondeprojet.Util;
@@ -29,13 +30,17 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
 import static com.example.gestiondeprojet.Constants.BEGIN_DATE;
+import static com.example.gestiondeprojet.Constants.CLOSED;
 import static com.example.gestiondeprojet.Constants.CONTEXT;
 import static com.example.gestiondeprojet.Constants.DEBUGG;
 import static com.example.gestiondeprojet.Constants.DESCRIPTION;
+import static com.example.gestiondeprojet.Constants.DOING;
 import static com.example.gestiondeprojet.Constants.ESTIMATE_DURATION;
 import static com.example.gestiondeprojet.Constants.ID;
 import static com.example.gestiondeprojet.Constants.JSON_EXTENSION;
@@ -47,13 +52,20 @@ import static com.example.gestiondeprojet.Constants.TASK;
 import static com.example.gestiondeprojet.Constants.TODO;
 import static com.example.gestiondeprojet.Constants.URL;
 import static com.example.gestiondeprojet.Constants.currentUsername;
+import static com.example.gestiondeprojet.Util.findPositionWithId;
 
 /**
- * This class is link to the task creation by managing the logic behind the creation of a task.
- * Cette classe est lié à la création de tâche en gérant la logique derrière la creation de taches.
+ * This class is link to the update task activity and manage the logic behind this activity.
+ * Cette classe est lié à l'activité de mise à jour des tâches et gère toutes la logique derrière.
  * @author Kierian Tirlemont
  */
-public class taskCreateActivity extends AppCompatActivity {
+public class UpdateTaskActivity extends AppCompatActivity {
+
+    /**
+     * The spinner that shows the different state of the task.
+     * Le menu déroulant qui affiche l'état de la tache.
+     */
+    private Spinner stateSpinner;
 
     /**
      * The component where the user can enter the task' name.
@@ -66,44 +78,6 @@ public class taskCreateActivity extends AppCompatActivity {
      * Le composant ou l'utilisateur peut rentrer la description de la tâche.
      */
     private EditText taskDesc;
-
-    /**
-     * The component where the user can enter the context of the task.
-     * Le composant ou l'utilisateur peut rentrer le contexte de la tâche.
-     */
-    private EditText taskContext;
-
-    /**
-     * The component where the user can select the begin date of the task.
-     * Le composant ou l'utilisateur peut choisir la date de début de la tâche.
-     */
-    private EditText taskBeginDate;
-
-    /**
-     * The component where the user can select the max end date of the task.
-     * Le composant ou l'utilisateur peut choisir la date de fin maximale de la tâche.
-     */
-    private EditText taskEndDate;
-
-    /**
-     * The button that allows to save the new task.
-     * Le boutton qui permet de sauvegarder la nouvelle tâche.
-     */
-    private Button saveTask;
-
-    /**
-     * The context of the activity
-     * Le contexte de l'activité.
-     */
-    private Context context;
-
-    /**
-     * The component where the user can enter the project name link to the task. This component
-     * allows to displays the name of project that already exists.
-     * Le composant ou l'utilisateur peut écrire le nom du projet lié à la tâche. Ce composant
-     * permet d'afficher le nom des projets existes déjà.
-     */
-    private AutoCompleteTextView project;
 
     /**
      * The component where the user can select the numbers of hours that the task will take. This
@@ -122,6 +96,38 @@ public class taskCreateActivity extends AppCompatActivity {
     private NumberPicker nbPickerMinutes;
 
     /**
+     * The component where the user can select the begin date of the task.
+     * Le composant ou l'utilisateur peut choisir la date de début de la tâche.
+     */
+    private EditText taskBeginDate;
+
+    /**
+     * The component where the user can select the max end date of the task.
+     * Le composant ou l'utilisateur peut choisir la date de fin maximale de la tâche.
+     */
+    private EditText taskEndDate;
+
+    /**
+     * The component where the user can enter the context of the task.
+     * Le composant ou l'utilisateur peut rentrer le contexte de la tâche.
+     */
+    private EditText taskContext;
+
+    /**
+     * The component where the user can enter the project name link to the task. This component
+     * allows to displays the name of project that already exists.
+     * Le composant ou l'utilisateur peut écrire le nom du projet lié à la tâche. Ce composant
+     * permet d'afficher le nom des projets existes déjà.
+     */
+    private AutoCompleteTextView project;
+
+    /**
+     * The button that allows to save the modification
+     * Le boutton qui permet d'enregistrer les modifications
+     */
+    private Button updateTask;
+
+    /**
      * This component allows a better display of the selection of the date.
      * Ce composant permet un affichage plus conviviale de la date.
      */
@@ -134,10 +140,40 @@ public class taskCreateActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener dateSetListenerEnd;
 
     /**
+     * The context of the activity
+     * Le contexte de l'activité.
+     */
+    private Context context;
+
+    /**
+     * The id of the task
+     * L'id de la tâche
+     */
+    private int taskId;
+
+    /**
+     * The json array which contains every tasks
+     * Le tableau json qui contient toutes les tâches
+     */
+    private JSONArray taskArray;
+
+    /**
+     * The json object which contains the current task to display/modify
+     * L'objet json qui contient la tâche courante à afficher/modifier
+     */
+    private JSONObject currentTask;
+
+    /**
      * The component which allows to go back to the list.
      * Le composant qui permet de revenir sur l'activité d'affichage de la liste.
      */
     private ImageButton backButton;
+
+    /**
+     * The id of the task to update.
+     * L'identifiant de la tache a mettre à jour.
+     */
+    private int taskIdToDisplay;
 
     /**
      * The component which allows to enter an URL.
@@ -148,27 +184,41 @@ public class taskCreateActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_task);
+        setContentView(R.layout.activity_update_task);
+
+        Bundle bundle = getIntent().getExtras();
+        this.taskIdToDisplay = bundle.getInt("taskId", 0);
 
         // Init attributes
-        this.taskName = findViewById(R.id.task_name);
-        this.taskDesc = findViewById(R.id.task_desc);
-        this.taskContext = findViewById(R.id.task_context);
-        this.taskBeginDate = findViewById(R.id.task_begin_date);
-        this.taskEndDate = findViewById(R.id.task_end_date);
-        this.saveTask = findViewById(R.id.create_task_button);
-        this.project = findViewById(R.id.task_project);
-        this.backButton = findViewById(R.id.create_back_button);
-        this.taskUrl = findViewById(R.id.create_task_url);
+        this.stateSpinner = findViewById(R.id.update_spinner_state);
+        this.taskName = findViewById(R.id.update_task_name);
+        this.taskDesc = findViewById(R.id.update_task_desc);
+        this.nbPickerHour = findViewById(R.id.update_task_duration_hour);
+        this.nbPickerMinutes = findViewById(R.id.update_task_duration_minutes);
+        this.taskBeginDate = findViewById(R.id.update_task_begin_date);
+        this.taskEndDate = findViewById(R.id.update_task_end_date);
+        this.taskContext = findViewById(R.id.update_task_context);
+        this.project = findViewById(R.id.update_task_project);
+        this.updateTask = findViewById(R.id.update_task_button);
+        this.backButton = findViewById(R.id.update_back_button);
+        this.taskUrl = findViewById(R.id.update_task_url);
         this.context = this;
 
-        this.nbPickerHour = findViewById(R.id.task_duration_hour);
-        this.nbPickerMinutes = findViewById(R.id.task_duration_minutes);
-
+        // Put the possible values of the NumberPicker
+        // Met les valeurs possibles de NumberPicker
         this.nbPickerHour.setMinValue(0);
         this.nbPickerHour.setMaxValue(999);
         this.nbPickerMinutes.setMinValue(0);
         this.nbPickerMinutes.setMaxValue(59);
+
+        // Create the spinner which display teh different state that a task can take.
+        // Crée le spinner qui change l'état de la tache
+        final ArrayList<String> possibleState = new ArrayList<>(Arrays.asList(
+                getResources().getString(R.string.todo),
+                getResources().getString(R.string.doing),
+                getResources().getString(R.string.finish)));
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, possibleState);
+        this.stateSpinner.setAdapter(spinnerArrayAdapter);
 
         // If the user select the edittext about the begin date of the task it displays a
         // better display to choose the date.
@@ -183,7 +233,7 @@ public class taskCreateActivity extends AppCompatActivity {
                 int day = cal.get(Calendar.DAY_OF_MONTH);
 
                 DatePickerDialog dialog = new DatePickerDialog(
-                        taskCreateActivity.this,
+                        UpdateTaskActivity.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         dateSetListenerBegin,
                         year,month,day);
@@ -205,7 +255,7 @@ public class taskCreateActivity extends AppCompatActivity {
                 int day = cal.get(Calendar.DAY_OF_MONTH);
 
                 DatePickerDialog dialog = new DatePickerDialog(
-                        taskCreateActivity.this,
+                        UpdateTaskActivity.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         dateSetListenerEnd,
                         year,month,day);
@@ -240,21 +290,49 @@ public class taskCreateActivity extends AppCompatActivity {
             }
         };
 
-        // This lines allows to display the project name already saved when the user write it.
-        // Ces lignes permettent d'afficher le nom des projets déjà enregistrés quand l'utilisateur
-        // ecrit.
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        // Displays every project already saved with the autocompletion
+        // Affichage de tous les projets avec l'autocompletion
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 R.layout.adapter_list_project, R.id.text_completion_project, Util.findProjects(this));
         this.project.setAdapter(adapter);
 
-        // This button' listener allows to save the task in the json file if the data written by the
-        // user are correct
-        // Le listener de ce boutton permet d'enregistrer la tâche dans le fichier json si les
-        // données écrites par l'utilisateur sont correctes.
-        this.saveTask.setOnClickListener(new View.OnClickListener() {
+        // Recover the current value of the task
+        // Recupère les valeurs de la tâche
+        JSONObject json = Util.readJsonFile(currentUsername+ JSON_EXTENSION, context);
+
+        try {
+            // Display the current values of the tasks
+            // Affichage des valeurs actuelles de la tache
+            this.taskArray = json.getJSONArray(TASK);
+            this.currentTask = taskArray.getJSONObject(findPositionWithId(this.taskIdToDisplay, context));
+
+            this.taskId = this.currentTask.getInt(ID);
+
+            this.taskName.setText(currentTask.getString(NAME));
+            this.stateSpinner.setSelection(findDefaultSpinnerPos(String.valueOf(currentTask.get(STATE))));
+            this.taskDesc.setText(currentTask.getString(DESCRIPTION));
+            this.taskBeginDate.setText(currentTask.getString(BEGIN_DATE));
+            this.taskEndDate.setText(currentTask.getString(MAX_END_DATE));
+            this.taskContext.setText(currentTask.getString(CONTEXT));
+            this.taskUrl.setText(currentTask.getString(URL));
+
+            String duration = currentTask.getString(ESTIMATE_DURATION);
+            String[] values = duration.split("h");
+            int hours = Integer.parseInt(values[0]);
+            int minutes = Integer.parseInt(values[1].split("m")[0]);
+
+            this.nbPickerMinutes.setValue(minutes);
+            this.nbPickerHour.setValue(hours);
+
+            if(this.currentTask.has(PROJECT))this.project.setText(currentTask.getString("Project"));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        this.updateTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 // Check that the end date is not before the begin date.
                 // Vérifie que la date de fin n'est pas avant la date de début
                 boolean errorDate = false;
@@ -288,39 +366,38 @@ public class taskCreateActivity extends AppCompatActivity {
                     if(Util.isUrl(taskUrl.getText().toString()) || taskUrl.getText().toString().equals("")){
                         try {
                             // Create the task
-                            JSONObject task = new JSONObject();
-                            task.put(ID, Util.findId(currentUsername+ JSON_EXTENSION, context));
-                            task.put(NAME,taskName.getText());
-                            task.put(STATE, TODO);
-                            task.put(DESCRIPTION, taskDesc.getText());
-                            task.put(ESTIMATE_DURATION, nbPickerHour.getValue()+"h"+nbPickerMinutes.getValue()+"m");
-                            task.put(BEGIN_DATE, taskBeginDate.getText());
-                            task.put(MAX_END_DATE, taskEndDate.getText());
-                            task.put(CONTEXT, taskContext.getText());
-                            task.put(PROJECT, project.getText());
-                            task.put(URL, taskUrl.getText());
+                            taskArray.remove(findPositionWithId(taskIdToDisplay, context)); // Supprime la tache du json avant de la réécrire
+                            currentTask.put(ID, taskId);
+                            currentTask.put(NAME, taskName.getText().toString());
+                            currentTask.put(STATE, findStateInSpinner(stateSpinner.getSelectedItem().toString()));
+                            currentTask.put(DESCRIPTION, taskDesc.getText().toString());
+                            currentTask.put(ESTIMATE_DURATION, nbPickerHour.getValue()+"h"+nbPickerMinutes.getValue()+"m");
+                            currentTask.put(BEGIN_DATE, taskBeginDate.getText().toString());
+                            currentTask.put(MAX_END_DATE, taskEndDate.getText().toString());
+                            currentTask.put(CONTEXT, taskContext.getText().toString());
+                            currentTask.put(PROJECT, project.getText().toString());
+                            currentTask.put(URL, taskUrl.getText().toString());
                             // The json file
                             JSONObject json = Util.readJsonFile(currentUsername+ JSON_EXTENSION, context);
 
                             // The task list
-                            JSONArray taskList = json.getJSONArray(TASK);
-                            taskList.put(task); // Add the task
-                            json.put(TASK, taskList);
+                            taskArray.put(currentTask); // Add the task
+                            json.put(TASK, taskArray);
 
                             Util.writeJsonFile(currentUsername+ JSON_EXTENSION, json, context);
 
                             // Return to the list
-                            Intent intent = new Intent(getApplicationContext(), ListTask.class);
+                            Intent intent = new Intent(getApplicationContext(), ListTaskActivity.class);
                             startActivity(intent);
                             finish();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                    }else {
+                    }else{
                         // Display an error message because the url is wrong
                         // Affiche un message d'error car l'url est mauvais
-                        android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(taskCreateActivity.this);
+                        android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(UpdateTaskActivity.this);
                         adb.setTitle(getResources().getString(R.string.error_url_entered));
                         adb.setMessage(getResources().getString(R.string.error_url_entered_text));
                         adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
@@ -332,11 +409,10 @@ public class taskCreateActivity extends AppCompatActivity {
                         adb.show();
                     }
 
-
                 }else if(errorDate) {
                     // Display a popup which says that the begin date is after the end date.
                     // Affiche une popup qui prévient que la date de début est après la date de fin.
-                    AlertDialog.Builder adb = new AlertDialog.Builder(taskCreateActivity.this);
+                    AlertDialog.Builder adb = new AlertDialog.Builder(UpdateTaskActivity.this);
                     adb.setTitle(getResources().getString(R.string.error_date));
                     adb.setPositiveButton("Ok", null);
                     adb.show();
@@ -360,7 +436,7 @@ public class taskCreateActivity extends AppCompatActivity {
                     }
                     // Display a popup error
                     // Affiche une popup d'erreur
-                    AlertDialog.Builder adb = new AlertDialog.Builder(taskCreateActivity.this);
+                    AlertDialog.Builder adb = new AlertDialog.Builder(UpdateTaskActivity.this);
                     adb.setTitle(getResources().getString(R.string.fill_required_fill));
                     adb.setPositiveButton("Ok", null);
                     adb.show();
@@ -373,7 +449,7 @@ public class taskCreateActivity extends AppCompatActivity {
         this.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ListTask.class);
+                Intent intent = new Intent(getApplicationContext(), ListTaskActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -386,8 +462,43 @@ public class taskCreateActivity extends AppCompatActivity {
      */
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(getApplicationContext(), ListTask.class);
+        Intent intent = new Intent(getApplicationContext(), ListTaskActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    /**
+     * This method allows to make the translation between the name of the formal name of the task
+     * and the name of the state that the user will understand.
+     * Cette méthode permet de faire la traduction entre le nom formel de l'état de la tache et le
+     * nom de l'état qu'il sera en mesure de comprendre.
+     * @param stateSelection The state that the user selected / L'état que l'utilisateur à choisi
+     * @return The formal name of the state / Le nom formel de l'état de la tache.
+     */
+    private String findStateInSpinner(String stateSelection) {
+        if(stateSelection.equals(getResources().getString(R.string.todo))){
+            return TODO;
+        }else if(stateSelection.equals(getResources().getString(R.string.doing))){
+            return DOING;
+        }else{
+            return CLOSED;
+        }
+    }
+
+    /**
+     * This method allows to find the number that correspond to the current state of the task.
+     * Cette méthode permet de trouver le numbre qui correspond à l'état de la tache.
+     * @param state The state of the task / L'etat de la tache
+     * @return A int that carrespond to the state of the task / Un int qui correspond à l'état de la
+     *         tache.
+     */
+    private int findDefaultSpinnerPos(String state){
+        if(state.equals(TODO)){
+            return 0;
+        }else if(state.equals(DOING)){
+            return 1;
+        }else{
+            return 2;
+        }
     }
 }

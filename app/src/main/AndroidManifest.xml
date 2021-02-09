@@ -16,12 +16,12 @@
         android:theme="@style/Theme.GestionDeProjet"
         android:usesCleartextTraffic="true">
         <activity android:name=".activities.WebViewActivity" />
-        <activity android:name=".activities.taskDescActivity" />
-        <activity android:name=".activities.UpdateTask" />
-        <activity android:name=".activities.taskCreateActivity" />
-        <activity android:name=".activities.ListTask" />
-        <activity android:name=".activities.CreateAccount" />
-        <activity android:name=".activities.Connexion" />
+        <activity android:name=".activities.TaskDescActivity" />
+        <activity android:name=".activities.UpdateTaskActivity" />
+        <activity android:name=".activities.TaskCreateActivity" />
+        <activity android:name=".activities.ListTaskActivity" />
+        <activity android:name=".activities.CreateAccountActivity" />
+        <activity android:name=".activities.ConnexionActivity" />
         <activity android:name=".activities.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

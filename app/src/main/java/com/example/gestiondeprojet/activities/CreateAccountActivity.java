@@ -9,20 +9,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.example.gestiondeprojet.Constants;
 import com.example.gestiondeprojet.R;
 import com.example.gestiondeprojet.Util;
-import com.example.gestiondeprojet.models.Task;
 import com.example.gestiondeprojet.models.User;
 import com.example.gestiondeprojet.sql.DatabaseHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 import static com.example.gestiondeprojet.Constants.JSON_EXTENSION;
 import static com.example.gestiondeprojet.Constants.currentSort;
@@ -33,7 +29,7 @@ import static com.example.gestiondeprojet.Constants.currentUsername;
  * Cette classe permet de mettre en place toute la logique derrière l'activité de création de compte.
  * @author Kierian Tirlemont
  */
-public class CreateAccount extends AppCompatActivity {
+public class CreateAccountActivity extends AppCompatActivity {
 
     /**
      * The button that allows to validate the creation of the account.
@@ -126,7 +122,7 @@ public class CreateAccount extends AppCompatActivity {
                             // Start the next activity
                             // Lance la prochaine activity
                             currentSort = 0; // By default the current sort is 0
-                            Intent intent = new Intent(getApplicationContext(), ListTask.class);
+                            Intent intent = new Intent(getApplicationContext(), ListTaskActivity.class);
                             startActivity(intent);
                             finish();
                         } catch (JSONException e) {
@@ -134,7 +130,7 @@ public class CreateAccount extends AppCompatActivity {
                         }
 
                     }else{
-                        android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(CreateAccount.this);
+                        android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(CreateAccountActivity.this);
                         adb.setTitle(getResources().getString(R.string.password_not_same));
                         adb.setPositiveButton("Ok", null);
                         adb.show();
@@ -143,7 +139,7 @@ public class CreateAccount extends AppCompatActivity {
                     }
 
                 }else{
-                    android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(CreateAccount.this);
+                    android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(CreateAccountActivity.this);
                     adb.setTitle(getResources().getString(R.string.id_already_used));
                     adb.setPositiveButton("Ok", null);
                     adb.show();
@@ -159,7 +155,7 @@ public class CreateAccount extends AppCompatActivity {
         this.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Connexion.class);
+                Intent intent = new Intent(getApplicationContext(), ConnexionActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -172,7 +168,7 @@ public class CreateAccount extends AppCompatActivity {
      */
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(getApplicationContext(), Connexion.class);
+        Intent intent = new Intent(getApplicationContext(), ConnexionActivity.class);
         startActivity(intent);
         finish();
     }

@@ -67,7 +67,7 @@ import static java.util.Locale.UK;
  * ajouter quelques interactions avec l'utilisateur.
  * @author Kierian Tirlemont
  */
-public class ListTask extends AppCompatActivity {
+public class ListTaskActivity extends AppCompatActivity {
 
     /**
      * This imageButton allows to display an image and have the attribute of a button. When the
@@ -232,7 +232,7 @@ public class ListTask extends AppCompatActivity {
             public void onClick(View v) {
                 // Launch the create task activity
                 // Lance l'activité de creation de taches
-                Intent createTask = new Intent(getApplicationContext(), taskCreateActivity.class);
+                Intent createTask = new Intent(getApplicationContext(), TaskCreateActivity.class);
                 startActivity(createTask);
                 finish();
             }
@@ -250,7 +250,7 @@ public class ListTask extends AppCompatActivity {
                 // Display a small popup that ask if the user want to update, delete or cancel.
                 // Affiche une petite popup qui demande si l'utilisateur veut mettre à jour ou
                 // supprimer ou annuler.
-                AlertDialog.Builder adb = new AlertDialog.Builder(ListTask.this);
+                AlertDialog.Builder adb = new AlertDialog.Builder(ListTaskActivity.this);
                 adb.setTitle(getResources().getString(R.string.text_popup));
                 adb.setNeutralButton(getResources().getString(R.string.cancel), null);
                 adb.setPositiveButton(getResources().getString(R.string.update), new AlertDialog.OnClickListener() {
@@ -258,7 +258,7 @@ public class ListTask extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         // If he wants to update go to the update' activity
                         // S'il veut mettre à jour alors la page de mise à jour va s'afficher.
-                        Intent intent = new Intent(getApplicationContext(), UpdateTask.class);
+                        Intent intent = new Intent(getApplicationContext(), UpdateTaskActivity.class);
                         intent.putExtra("taskId", taskList.get(position).getId());
                         startActivity(intent);
                         finish();
@@ -285,7 +285,7 @@ public class ListTask extends AppCompatActivity {
         this.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), taskDescActivity.class);
+                Intent intent = new Intent(getApplicationContext(), TaskDescActivity.class);
                 intent.putExtra("taskId", taskList.get(position).getId());
                 startActivity(intent);
                 finish();
@@ -417,7 +417,7 @@ public class ListTask extends AppCompatActivity {
         this.translationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                androidx.appcompat.app.AlertDialog.Builder mBuilder = new androidx.appcompat.app.AlertDialog.Builder(ListTask.this);
+                androidx.appcompat.app.AlertDialog.Builder mBuilder = new androidx.appcompat.app.AlertDialog.Builder(ListTaskActivity.this);
                 mBuilder.setTitle(getResources().getString(R.string.choose_language));
                 mBuilder.setSingleChoiceItems(AVAILABLE_LANGUAGE, -1, new DialogInterface.OnClickListener() {
                     @Override
@@ -435,7 +435,7 @@ public class ListTask extends AppCompatActivity {
                         Configuration config = new Configuration();
                         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
                         dialog.dismiss();
-                        Intent intent = new Intent(getApplicationContext(), ListTask.class);
+                        Intent intent = new Intent(getApplicationContext(), ListTaskActivity.class);
                         startActivity(intent);
                         finish();
                     }
@@ -480,7 +480,7 @@ public class ListTask extends AppCompatActivity {
                         break;
                 }
                 // Relaunch the activity else crash
-                Intent intent = new Intent(getApplicationContext(), ListTask.class);
+                Intent intent = new Intent(getApplicationContext(), ListTaskActivity.class);
                 startActivity(intent);
                 finish();
             }

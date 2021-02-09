@@ -37,7 +37,7 @@ import static java.util.Locale.UK;
  * Cette classe permet de mettre en place toute la logique derrière l'activité de connexion.
  * @author Kierian Tirlemont
  */
-public class Connexion extends AppCompatActivity {
+public class ConnexionActivity extends AppCompatActivity {
 
     /**
      * The button that returns the activity that allows to create an account.
@@ -132,7 +132,7 @@ public class Connexion extends AppCompatActivity {
         this.createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), CreateAccount.class);
+                Intent intent = new Intent(getApplicationContext(), CreateAccountActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -151,20 +151,20 @@ public class Connexion extends AppCompatActivity {
                     savePreferences();
                     currentUsername = String.valueOf(id.getText());
                     currentSort = 0; // By default the current sort is 0
-                    Intent intent = new Intent(getApplicationContext(), ListTask.class);
+                    Intent intent = new Intent(getApplicationContext(), ListTaskActivity.class);
                     startActivity(intent);
                     finish();
                 }else{
                     if(databaseHelper.checkUser(id.getText().toString())){
                         password.setText("");
-                        android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(Connexion.this);
+                        android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(ConnexionActivity.this);
                         adb.setTitle(getResources().getString(R.string.password_incorrect));
                         adb.setPositiveButton("Ok", null);
                         adb.show();
                     }else{
                         id.setText("");
                         password.setText("");
-                        android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(Connexion.this);
+                        android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(ConnexionActivity.this);
                         adb.setTitle(getResources().getString(R.string.id_incorrect));
                         adb.setPositiveButton("Ok", null);
                         adb.show();
@@ -178,7 +178,7 @@ public class Connexion extends AppCompatActivity {
         this.translationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(Connexion.this);
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(ConnexionActivity.this);
                 mBuilder.setTitle(getResources().getString(R.string.choose_language));
                 mBuilder.setSingleChoiceItems(AVAILABLE_LANGUAGE, -1, new DialogInterface.OnClickListener() {
                     @Override
