@@ -1,4 +1,4 @@
-The task manager application from the Task Manegement Corp.
+The task manager application for android from the Task Manegement Corp.
 ==
 
 **Version 4.0.0**
@@ -21,6 +21,7 @@ The task manager application from the Task Manegement Corp.
 
 #### Library/Framework/techno
 
+- Android
 - SQLite
 - JSON
 - AppCompat
