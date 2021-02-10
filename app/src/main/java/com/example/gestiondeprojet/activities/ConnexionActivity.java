@@ -24,7 +24,6 @@ import com.example.gestiondeprojet.sql.DatabaseHelper;
 
 import java.util.Locale;
 
-import static com.example.gestiondeprojet.Constants.DEBUGG;
 import static com.example.gestiondeprojet.Constants.AVAILABLE_LANGUAGE;
 import static com.example.gestiondeprojet.Constants.currentSort;
 import static com.example.gestiondeprojet.Constants.currentUsername;
@@ -159,14 +158,14 @@ public class ConnexionActivity extends AppCompatActivity {
                         password.setText("");
                         android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(ConnexionActivity.this);
                         adb.setTitle(getResources().getString(R.string.password_incorrect));
-                        adb.setPositiveButton("Ok", null);
+                        adb.setPositiveButton(getResources().getString(R.string.ok), null);
                         adb.show();
                     }else{
                         id.setText("");
                         password.setText("");
                         android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(ConnexionActivity.this);
                         adb.setTitle(getResources().getString(R.string.id_incorrect));
-                        adb.setPositiveButton("Ok", null);
+                        adb.setPositiveButton(getResources().getString(R.string.ok), null);
                         adb.show();
                     }
                 }
@@ -210,7 +209,6 @@ public class ConnexionActivity extends AppCompatActivity {
         // the current mode
         // Quand l'utilisateur clique sur le boutton de luminotsité, ca change pour le dark mode
         // ou le mode jour selon le mode
-        // TODO gérer le bug de changement de langue lors du changement de mode de couleur
         this.colorMode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -343,13 +341,10 @@ public class ConnexionActivity extends AppCompatActivity {
     private String findLanguagePreferencesStr(){
         String language = this.mPreferences.getString(getString(R.string.language), "FRANCE");
         if(language.equals("FRANCE")){
-            Log.e(DEBUGG, FRANCE.toString());
             return FRANCE.toString();
         }else if(language.equals("UK")){
-            Log.e(DEBUGG, UK.toString());
             return UK.toString();
         }else{
-            Log.e(DEBUGG, GERMANY.toString());
             return GERMANY.toString();
         }
     }

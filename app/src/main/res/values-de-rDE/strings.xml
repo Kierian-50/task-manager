@@ -72,4 +72,7 @@
     <string name="url">URL</string>
 
     <string name="no_link">Kein Link zugeordnet</string>
+
+    <string name="ok">Ok</string>
+    <string name="back_button">Back button</string>
 </resources>

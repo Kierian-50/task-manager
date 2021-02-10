@@ -24,7 +24,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static android.content.Context.MODE_PRIVATE;
-import static com.example.gestiondeprojet.Constants.DEBUGG;
 import static com.example.gestiondeprojet.Constants.ID;
 import static com.example.gestiondeprojet.Constants.JSON_EXTENSION;
 import static com.example.gestiondeprojet.Constants.TASK;
@@ -50,7 +49,6 @@ public class Util {
         try {
             fos = context.openFileOutput(fileName, MODE_PRIVATE);
             fos.write(contentStr.getBytes());
-            Log.e(DEBUGG, "Saved to " + context.getFilesDir() + "/"+fileName);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -84,8 +82,6 @@ public class Util {
                 sb.append(text).append("\n");
             }
             res = sb.toString();
-            Log.e(DEBUGG, "Read in " + context.getFilesDir() + "/"+fileName);
-            Log.e(DEBUGG, "contenu du fichier "+fileName+": "+res);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -138,8 +134,6 @@ public class Util {
             taskList.remove(index);
 
             json.put(TASK, taskList);
-
-            Log.e(DEBUGG, "removeTask : new json : "+json.toString());
 
             Util.writeJsonFile(fileName, json, context);
 

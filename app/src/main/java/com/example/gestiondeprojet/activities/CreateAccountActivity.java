@@ -132,7 +132,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                     }else{
                         android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(CreateAccountActivity.this);
                         adb.setTitle(getResources().getString(R.string.password_not_same));
-                        adb.setPositiveButton("Ok", null);
+                        adb.setPositiveButton(getResources().getString(R.string.ok), null);
                         adb.show();
                         firstPassword.getText().clear();
                         secondPassword.getText().clear();
@@ -141,7 +141,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                 }else{
                     android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(CreateAccountActivity.this);
                     adb.setTitle(getResources().getString(R.string.id_already_used));
-                    adb.setPositiveButton("Ok", null);
+                    adb.setPositiveButton(getResources().getString(R.string.ok), null);
                     adb.show();
                     firstPassword.getText().clear();
                     secondPassword.getText().clear();

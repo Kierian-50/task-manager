@@ -46,18 +46,22 @@ public class State {
      * @param newState The new state of the task / Le nouvel état de la tache
      */
     public void changeState(String newState){
-        if(newState.equals("toDo")){
-            this.toDo = true;
-            this.doing = false;
-            this.closed = false;
-        }else if(newState.equals("doing")){
-            this.toDo = false;
-            this.doing = true;
-            this.closed = false;
-        }else if(newState.equals("closed")){
-            this.toDo = false;
-            this.doing = false;
-            this.closed = true;
+        switch (newState) {
+            case "toDo":
+                this.toDo = true;
+                this.doing = false;
+                this.closed = false;
+                break;
+            case "doing":
+                this.toDo = false;
+                this.doing = true;
+                this.closed = false;
+                break;
+            case "closed":
+                this.toDo = false;
+                this.doing = false;
+                this.closed = true;
+                break;
         }
     }
 

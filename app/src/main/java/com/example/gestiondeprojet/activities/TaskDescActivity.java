@@ -32,6 +32,7 @@ import static com.example.gestiondeprojet.Constants.NAME;
 import static com.example.gestiondeprojet.Constants.PROJECT;
 import static com.example.gestiondeprojet.Constants.STATE;
 import static com.example.gestiondeprojet.Constants.TASK;
+import static com.example.gestiondeprojet.Constants.TASK_ID;
 import static com.example.gestiondeprojet.Constants.TODO;
 import static com.example.gestiondeprojet.Constants.URL;
 import static com.example.gestiondeprojet.Constants.currentUsername;
@@ -135,7 +136,7 @@ public class TaskDescActivity extends AppCompatActivity {
         setContentView(R.layout.activity_task_desc_activity);
 
         Bundle bundle = getIntent().getExtras();
-        this.taskId = bundle.getInt("taskId", 0);
+        this.taskId = bundle.getInt(TASK_ID, 0);
 
         // Init attributes of the toolbar
         this.context = this;
@@ -160,7 +161,7 @@ public class TaskDescActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), UpdateTaskActivity.class);
-                intent.putExtra("taskId", taskId);
+                intent.putExtra(TASK_ID, taskId);
                 startActivity(intent);
                 finish();
             }
@@ -257,11 +258,11 @@ public class TaskDescActivity extends AppCompatActivity {
                 if(urlStr.equals("")){
                     android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(TaskDescActivity.this);
                     adb.setTitle(getResources().getString(R.string.empty_link));
-                    adb.setPositiveButton("Ok", null);
+                    adb.setPositiveButton(getResources().getString(R.string.ok), null);
                     adb.show();
                 }else{
                     Intent intent = new Intent(getApplicationContext(), WebViewActivity.class);
-                    intent.putExtra("taskId", taskId);
+                    intent.putExtra(TASK_ID, taskId);
                     intent.putExtra("url", urlStr);
                     startActivity(intent);
                     finish();

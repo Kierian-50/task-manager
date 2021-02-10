@@ -52,6 +52,7 @@ import static com.example.gestiondeprojet.Constants.NAME;
 import static com.example.gestiondeprojet.Constants.PROJECT;
 import static com.example.gestiondeprojet.Constants.STATE;
 import static com.example.gestiondeprojet.Constants.TASK;
+import static com.example.gestiondeprojet.Constants.TASK_ID;
 import static com.example.gestiondeprojet.Constants.URL;
 import static com.example.gestiondeprojet.Constants.AVAILABLE_LANGUAGE;
 import static com.example.gestiondeprojet.Constants.currentSort;
@@ -259,7 +260,7 @@ public class ListTaskActivity extends AppCompatActivity {
                         // If he wants to update go to the update' activity
                         // S'il veut mettre à jour alors la page de mise à jour va s'afficher.
                         Intent intent = new Intent(getApplicationContext(), UpdateTaskActivity.class);
-                        intent.putExtra("taskId", taskList.get(position).getId());
+                        intent.putExtra(TASK_ID, taskList.get(position).getId());
                         startActivity(intent);
                         finish();
                     }});
@@ -286,7 +287,7 @@ public class ListTaskActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), TaskDescActivity.class);
-                intent.putExtra("taskId", taskList.get(position).getId());
+                intent.putExtra(TASK_ID, taskList.get(position).getId());
                 startActivity(intent);
                 finish();
             }
@@ -449,7 +450,6 @@ public class ListTaskActivity extends AppCompatActivity {
         // the current mode
         // Quand l'utilisateur clique sur le boutton de luminotsité, ca change pour le dark mode
         // ou le mode jour selon le mode
-        // TODO gérer le bug de changement de langue lors du changement de mode de couleur
         this.buttonMode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

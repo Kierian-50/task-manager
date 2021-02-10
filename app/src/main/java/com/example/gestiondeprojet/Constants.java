@@ -4,7 +4,6 @@ public final class Constants {
 
     public static final int SPLASH_SCREEN_DELAY = 3000;
     public static final int LIST_TASK_DELAY = 1000;
-    public static final String DEBUGG = "DEBUGG";
     public static final String ID = "id";
     public static final String PASSWORD = "Password";
     public static final String TASK = "Task";
@@ -23,6 +22,7 @@ public final class Constants {
     public static final String PROJECT = "Project";
     public static final String URL = "Url";
     public static final String[] AVAILABLE_LANGUAGE = {"Français", "English", "Deutsch"};
+    public static final String TASK_ID = "taskId";
 
     public static int currentSort; // Allow to have the current sort chosen by the user
     public static String currentUsername;

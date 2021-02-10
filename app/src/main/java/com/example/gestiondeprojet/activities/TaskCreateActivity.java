@@ -34,7 +34,6 @@ import java.util.Date;
 
 import static com.example.gestiondeprojet.Constants.BEGIN_DATE;
 import static com.example.gestiondeprojet.Constants.CONTEXT;
-import static com.example.gestiondeprojet.Constants.DEBUGG;
 import static com.example.gestiondeprojet.Constants.DESCRIPTION;
 import static com.example.gestiondeprojet.Constants.ESTIMATE_DURATION;
 import static com.example.gestiondeprojet.Constants.ID;
@@ -220,7 +219,6 @@ public class TaskCreateActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
-                Log.e(DEBUGG, "onDateSet: mm/dd/yyy: " + month + "/" + day + "/" + year);
 
                 String date = day + "/" + month + "/" + year;
                 taskBeginDate.setText(date);
@@ -233,7 +231,6 @@ public class TaskCreateActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
-                Log.e(DEBUGG, "onDateSet: mm/dd/yyy: " + month + "/" + day + "/" + year);
 
                 String date = day + "/" + month + "/" + year;
                 taskEndDate.setText(date);
@@ -323,7 +320,7 @@ public class TaskCreateActivity extends AppCompatActivity {
                         android.app.AlertDialog.Builder adb = new android.app.AlertDialog.Builder(TaskCreateActivity.this);
                         adb.setTitle(getResources().getString(R.string.error_url_entered));
                         adb.setMessage(getResources().getString(R.string.error_url_entered_text));
-                        adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
+                        adb.setPositiveButton(getResources().getString(R.string.ok), new AlertDialog.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 taskUrl.getText().clear();
@@ -338,7 +335,7 @@ public class TaskCreateActivity extends AppCompatActivity {
                     // Affiche une popup qui prévient que la date de début est après la date de fin.
                     AlertDialog.Builder adb = new AlertDialog.Builder(TaskCreateActivity.this);
                     adb.setTitle(getResources().getString(R.string.error_date));
-                    adb.setPositiveButton("Ok", null);
+                    adb.setPositiveButton(getResources().getString(R.string.ok), null);
                     adb.show();
                 }else{
                     // For each required field which is not filled the hint text becomes red
@@ -362,7 +359,7 @@ public class TaskCreateActivity extends AppCompatActivity {
                     // Affiche une popup d'erreur
                     AlertDialog.Builder adb = new AlertDialog.Builder(TaskCreateActivity.this);
                     adb.setTitle(getResources().getString(R.string.fill_required_fill));
-                    adb.setPositiveButton("Ok", null);
+                    adb.setPositiveButton(getResources().getString(R.string.ok), null);
                     adb.show();
                 }
             }

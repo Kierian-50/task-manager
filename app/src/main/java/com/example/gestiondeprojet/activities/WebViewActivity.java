@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import com.example.gestiondeprojet.R;
 
+import static com.example.gestiondeprojet.Constants.TASK_ID;
+
 /**
  * This class allows to display a web page record by the user.
  * Cette classe permet d'afficher une page web enregistré par l'utilisateur.
@@ -68,7 +70,7 @@ public class WebViewActivity extends AppCompatActivity {
         // Recovery the params of the previous activity
         // Retrouve les parametres de l'activité précédente
         Bundle bundle = getIntent().getExtras();
-        this.taskId = bundle.getInt("taskId", 0);
+        this.taskId = bundle.getInt(TASK_ID, 0);
         this.urlStr = bundle.getString("url", "");
 
         // Init component
@@ -96,7 +98,7 @@ public class WebViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), TaskDescActivity.class);
-                intent.putExtra("taskId", taskId);
+                intent.putExtra(TASK_ID, taskId);
                 startActivity(intent);
                 finish();
             }
@@ -123,13 +125,13 @@ public class WebViewActivity extends AppCompatActivity {
                 AlertDialog.Builder adb = new AlertDialog.Builder(WebViewActivity.this);
                 adb.setTitle(getResources().getString(R.string.loading_error));
                 adb.setMessage(getResources().getString(R.string.loading_error_text));
-                adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
+                adb.setPositiveButton(getResources().getString(R.string.ok), new AlertDialog.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // At the click go to the previous activity.
                         // Au clique retourne à la page précedente.
                         Intent intent = new Intent(getApplicationContext(), TaskDescActivity.class);
-                        intent.putExtra("taskId", taskId);
+                        intent.putExtra(TASK_ID, taskId);
                         startActivity(intent);
                         finish();
                     }});
@@ -175,7 +177,7 @@ public class WebViewActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(getApplicationContext(), TaskDescActivity.class);
-        intent.putExtra("taskId", taskId);
+        intent.putExtra(TASK_ID, taskId);
         startActivity(intent);
         finish();
     }

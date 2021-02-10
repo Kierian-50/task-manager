@@ -69,4 +69,6 @@
 
     <string name="no_link">Aucun lien lié</string>
 
+    <string name="ok">Ok</string>
+    <string name="back_button">Back button</string>
 </resources>
